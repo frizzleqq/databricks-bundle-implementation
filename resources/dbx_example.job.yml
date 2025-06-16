@@ -1,0 +1,51 @@
+# The main job for dbx_example.
+resources:
+  jobs:
+    dbx_example_job:
+      name: dbx_example_job
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      #email_notifications:
+      #  on_failure:
+      #    - your_email@example.com
+
+      tasks:
+        - task_key: notebook_task
+          job_cluster_key: job_cluster
+          notebook_task:
+            notebook_path: ../notebooks/notebook_example.ipynb
+            source: WORKSPACE
+          libraries:
+            - whl: ../dist/*.whl
+
+        - task_key: main_task
+          depends_on:
+            - task_key: notebook_task
+          job_cluster_key: job_cluster
+          python_wheel_task:
+            package_name: dbx_example
+            entry_point: main
+          libraries:
+            - whl: ../dist/*.whl
+
+      job_clusters:
+        - job_cluster_key: job_cluster
+          # maybe a more realistic cluster in future
+          new_cluster:
+            spark_version: 16.3.x-scala2.12
+            spark_conf:
+              spark.master: local[*, 4]
+              spark.databricks.cluster.profile: singleNode
+            node_type_id: Standard_DS3_v2
+            driver_node_type_id: Standard_DS3_v2
+            data_security_mode: SINGLE_USER
+            custom_tags:
+              ResourceClass: SingleNode
+            enable_elastic_disk: true
+            runtime_engine: STANDARD
+            num_workers: 0

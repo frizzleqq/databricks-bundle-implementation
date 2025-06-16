@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dbx_example"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Florian Fritz", email = "todo@test.com" }
+]
+requires-python = ">=3.11"
+urls.homepage = "todo"
+
+# Roughly based on Databricks runtime 15.1
+# https://docs.databricks.com/aws/en/release-notes/serverless/#version-151
+dependencies = [
+    "databricks-sdk==0.57.0",
+    "delta-spark>=3.2.0, <4.0.0",
+    "pydantic==1.10.6",
+    "pyspark>=3.5.0, <4.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "databricks-bundles",
+    "ipykernel",
+    "mypy",
+    "pip",  # Databricks extension needs it
+    "pytest",
+    "ruff",
+]
+connect = [
+    # alternatively use databricks-connect plugin to install
+    "databricks-connect>=15.1,<15.2",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dbx_example*"]
+
+#[project.scripts]
+# uv-example = "uv_example:main"
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 100
+include = [
+    "pyproject.toml",
+    "dbx_example/**/*.py",
+    "tests/**/*.py",
+    "notebooks/**/*.py"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = [
+  "E", # pycodestyle
+  "W", # pycodestyle
+  "F", # Pyflakes
+  "I", # isort
+]
+ignore = [
+  "E501", # Line length is regulated by formatter
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.black]
+# This is only for Notebooks within Databricks Workspace and not used in Python project.
+line-length = 100
+target-version = ['py312']
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = [
+    "tests",
+]
