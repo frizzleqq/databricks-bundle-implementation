@@ -17,7 +17,7 @@ def test_deltawriter_create_table_if_not_exists(spark, catalog_name, request):
         ]
     )
     delta_writer = DeltaWorker(
-        catalog_name="unit_tests",
+        catalog_name=catalog_name,
         schema_name=f"schema_{request.node.name}",
         table_name=f"table_{request.node.name}",
     )
