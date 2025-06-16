@@ -32,8 +32,6 @@ jobs:
       with:
         java-version: 17
         distribution: "zulu"
-    - name: Install dependencies
-      run: make requirements
     - name: Install the project
       run: uv sync --locked --dev
     - name: Run Linting
