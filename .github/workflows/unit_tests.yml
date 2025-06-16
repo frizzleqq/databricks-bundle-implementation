@@ -27,6 +27,7 @@ jobs:
       uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
+        enable-cache: true
     - name: Setup Java JDK
       uses: actions/setup-java@v4.2.1
       with:
