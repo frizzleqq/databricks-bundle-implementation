@@ -2,7 +2,6 @@ import shutil
 import tempfile
 from pathlib import Path
 from typing import Generator, Optional
-from unittest.mock import patch
 
 import pytest
 from delta import configure_spark_with_delta_pip
