@@ -56,28 +56,3 @@ def catalog_name() -> Generator[Optional[str], None, None]:
         yield "unit_tests"
     else:
         yield None
-
-
-@pytest.fixture(autouse=True)
-def mock_catalog_create_schema(spark: SparkSession):
-    """Mock catalog.create_schema_if_not_exists to use Spark SQL instead."""
-
-    def create_schema_with_spark_sql(catalog_name, schema_name: str):
-        """Create schema using Spark SQL CREATE SCHEMA IF NOT EXISTS."""
-        if catalog_name:
-            full_schema_name = f"{catalog_name}.{schema_name}"
-        else:
-            full_schema_name = schema_name
-
-        spark.sql(f"CREATE SCHEMA IF NOT EXISTS {full_schema_name}")
-
-    if not DATABRICKS_CONNECT_AVAILABLE:
-        # Mock the catalog.create_schema_if_not_exists method
-        with patch(
-            "dbx_example.catalog.create_schema_if_not_exists",
-            side_effect=create_schema_with_spark_sql,
-        ):
-            yield
-    else:
-        # If running on Databricks, we don't need to mock anything
-        yield

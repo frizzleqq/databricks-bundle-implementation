@@ -36,12 +36,20 @@ class DeltaWorker(BaseModel):
         return ".".join([n for n in [self.catalog_name, self.schema_name, self.table_name] if n])
 
     @property
+    def full_schema_name(self) -> str:
+        return ".".join([n for n in [self.catalog_name, self.schema_name] if n])
+
+    @property
     def delta_table(self) -> DeltaTable:
         return DeltaTable.forName(get_spark(), self.full_table_name)
 
     @property
     def df(self) -> DataFrame:
         return get_spark().table(self.full_table_name)
+
+    def create_schema_if_not_exists(self) -> None:
+        """Create schema if it does not exist."""
+        get_spark().sql(f"CREATE SCHEMA IF NOT EXISTS {self.full_schema_name}")
 
     def create_table_if_not_exists(
         self,
@@ -93,6 +101,8 @@ class DeltaWorker(BaseModel):
 
         for k, v in table_properties.items():
             table_builder = table_builder.property(k, v)
+
+        self.create_schema_if_not_exists()
 
         return table_builder.execute()
 

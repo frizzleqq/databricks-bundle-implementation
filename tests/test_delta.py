@@ -1,15 +1,9 @@
 from pyspark.sql import types as T
 
-from dbx_example import catalog
 from dbx_example.delta import DeltaWorker
 
 
 def test_deltawriter_create_table_if_not_exists(spark, catalog_name, request):
-    catalog.create_schema_if_not_exists(
-        catalog_name=catalog_name,
-        schema_name=f"schema_{request.node.name}",
-    )
-
     schema = T.StructType(
         [
             T.StructField("key", T.IntegerType()),
