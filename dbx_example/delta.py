@@ -21,8 +21,8 @@ class DeltaWorker(BaseModel):
         ...,
         description="Table name.",
     )
-    schema_name: Optional[str] = Field(
-        default=None,
+    schema_name: str = Field(
+        ...,
         description="Schema name.",
     )
     catalog_name: Optional[str] = Field(
