@@ -25,11 +25,11 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "databricks-bundles",
-    "ipykernel",
-    "mypy",
-    "pip",  # Databricks extension needs it
-    "pytest",
-    "ruff",
+    "ipykernel",    # For Notebooks
+    "mypy",         # Type hints
+    "pip",          # Databricks extension needs it
+    "pytest",       # Unit testing
+    "ruff",         # Linting/Formatting
 ]
 connect = [
     # alternatively use databricks-connect plugin to install
