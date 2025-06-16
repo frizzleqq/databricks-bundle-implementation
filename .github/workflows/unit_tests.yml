@@ -33,7 +33,7 @@ jobs:
         java-version: 17
         distribution: "zulu"
     - name: Install the project
-      run: uv sync --locked --dev
+      run: uv sync --locked --extra dev --dev
     - name: Run Linting
       run: uv run ruff check
     - name: Run Format check
