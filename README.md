@@ -66,3 +66,6 @@ Uses Databricks Free Edition -> https://www.databricks.com/learn/free-edition
    import sys
    sys.path.append("..")
    ```
+* Service Principals
+
+   Make sure the User used to deploy has `Service principal: User` permissions. `Service principal: Manager` is not enough.

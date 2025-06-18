@@ -16,36 +16,25 @@ resources:
 
       tasks:
         - task_key: notebook_task
-          job_cluster_key: job_cluster
           notebook_task:
             notebook_path: ../notebooks/notebook_example.ipynb
             source: WORKSPACE
-          libraries:
-            - whl: ../dist/*.whl
 
         - task_key: main_task
           depends_on:
             - task_key: notebook_task
-          job_cluster_key: job_cluster
           python_wheel_task:
             package_name: dbx_example
             entry_point: main
-          libraries:
-            - whl: ../dist/*.whl
+          environment_key: default
 
-      job_clusters:
-        - job_cluster_key: job_cluster
-          # maybe a more realistic cluster in future
-          new_cluster:
-            spark_version: 16.3.x-scala2.12
-            spark_conf:
-              spark.master: local[*, 4]
-              spark.databricks.cluster.profile: singleNode
-            node_type_id: Standard_DS3_v2
-            driver_node_type_id: Standard_DS3_v2
-            data_security_mode: SINGLE_USER
-            custom_tags:
-              ResourceClass: SingleNode
-            enable_elastic_disk: true
-            runtime_engine: STANDARD
-            num_workers: 0
+      # Environment required for Python tasks
+      environments:
+        - environment_key: default
+
+          # Full documentation of this spec can be found at:
+          # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
+          spec:
+            client: '1'
+            dependencies:
+              - ../dist/*.whl

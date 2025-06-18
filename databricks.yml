@@ -55,13 +55,28 @@ targets:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}
 
-  prod:
+  test:
     mode: production
+    presets:
+      trigger_pause_status: UNPAUSED
     workspace:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
-    # permissions:
-    #  - user_name: ffritz@paiqo.com
-    #    level: CAN_MANAGE
-    # run_as:
-    #  service_principal_name: ...
+    permissions:
+     - group_name: group_etl
+       level: CAN_MANAGE
+    run_as:
+     service_principal_name: 280a0e2e-369a-440f-8bf1-8da8c975e077
+
+  prod:
+    mode: production
+    presets:
+      trigger_pause_status: UNPAUSED
+    workspace:
+      host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
+      root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
+    permissions:
+     - group_name: group_etl
+       level: CAN_MANAGE
+    run_as:
+     service_principal_name: 255b38e1-a8ec-40cf-8e27-e640276bef5d
