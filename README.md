@@ -58,13 +58,14 @@ Uses Databricks Free Edition -> https://www.databricks.com/learn/free-edition
 
    Working in Databricks Git Repos automatically adds the root of the Git Repo to Python `sys.path`.
 
-   This way Notebooks in the Git Repo can run `import dbx_example` to import the local Python package during development,
-   similarly to Notebooks importing the packaged and installed `dbx_example` in a Databricks Workflow.
+   This way Notebooks in the Git Repo can run `import dbx_example` to import the local Python package during development without explicitly installing the package on the Cluster.
 
-   Using a `src` directory would require changing the `sys.path` during development in a Databricks Git Repo.
+   A Notebook outside the Git Repo can do `import os; os.chdir("/Workspace/Users/...")` to act like it is within the Git Repo.
+
+   Using a `src` directory requires changing the `sys.path` during development (without package installed) in a Databricks Git Repo.
    ```python
    import sys
-   sys.path.append("..")
+   sys.path.append("../src")
    ```
 * Service Principals
 
