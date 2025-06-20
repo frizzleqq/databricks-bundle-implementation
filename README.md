@@ -1,9 +1,12 @@
 # Databricks Bundle Example
 
 This project is an example of a Databricks Asset bundle that deploys the following:
-* Python project as Wheel
-* Python Notebooks
-* Databricks Workflow
+* Python Project as Wheel
+* Python Notebooks (TODO)
+* Databricks Workflow examples
+   * Python Wheel Task
+   * Notebook Task (TODO)
+   * Python based workflow (TODO)
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
@@ -52,7 +55,6 @@ Example `.databrickscfg` configuration for connecting to Serverless Clusters:
 host  = https://....databricks.com
 token = ...
 serverless_compute_id = auto
-
 ```
 
 ## Databricks CLI
