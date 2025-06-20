@@ -1,4 +1,3 @@
-
 from dbx_example.delta import DeltaWorker
 from dbx_example.etl_task import Task
 
