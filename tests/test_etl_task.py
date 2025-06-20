@@ -16,7 +16,7 @@ def generate_test_task(catalog_name: str, schema_name: str, table_name: str):
             target_table.create_table_if_not_exists(df.schema)
             target_table.write(df, mode="overwrite")
 
-    return Task.create_etl_task("TestTask", name=f"test_task_{table_name}")
+    return Task.create_etl_task("TestTask")
 
 
 def test_etl_task_run(spark, catalog_name, request):

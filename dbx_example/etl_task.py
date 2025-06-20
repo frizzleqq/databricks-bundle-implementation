@@ -11,8 +11,8 @@ class Task(ABC):
     """
     Abstract base class for ETL tasks.
 
-    Provides a standard execution flow with logging and requires
-    child classes to implement the data processing logic.
+    Provides a standard execution way for child classes to implement
+    actual data processing.
     """
 
     @classmethod
@@ -40,20 +40,19 @@ class Task(ABC):
     def __init__(self):
         """
         Initialize an ETL task.
-
-        Parameters
-        ----------
-        name : str
-            A descriptive name for the task
         """
         self.logger = logging.getLogger(__name__)
         self.spark: SparkSession
+
+    @property
+    def name(self) -> str:
+        return self.__class__.__name__
 
     def run(self):
         """
         Execute the ETL task with proper logging.
         """
-        self._log_entry()
+        self._log_start()
         self.spark = get_spark()
         try:
             self._write_data()
@@ -62,33 +61,10 @@ class Task(ABC):
             self._log_exit(success=False, error=e)
             raise
 
-    @property
-    def name(self) -> str:
-        """
-        Get the name of the task.
-
-        Returns
-        -------
-        str
-            The name of the task class
-        """
-        return self.__class__.__name__
-
-    def _log_entry(self) -> None:
-        """Log the start of task execution."""
+    def _log_start(self) -> None:
         self.logger.info(f"Starting ETL task: {self.name}")
 
     def _log_exit(self, success: bool, error: Optional[Exception] = None) -> None:
-        """
-        Log the completion of task execution.
-
-        Parameters
-        ----------
-        success : bool
-            Whether the task completed successfully
-        error : Exception, optional
-            Exception that occurred, if any
-        """
         if success:
             self.logger.info(f"Completed ETL task: {self.name}")
         else:
@@ -100,10 +76,5 @@ class Task(ABC):
         Process and write data.
 
         This method must be implemented by child classes.
-
-        Returns
-        -------
-        dict
-            Dictionary containing the results of the operation
         """
         pass
