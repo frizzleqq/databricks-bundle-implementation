@@ -4,6 +4,7 @@ from typing import Optional
 
 from pyspark.sql import SparkSession
 
+from dbx_example.delta import DeltaWorker
 from dbx_example.spark import get_spark
 
 
@@ -48,14 +49,14 @@ class Task(ABC):
     def name(self) -> str:
         return self.__class__.__name__
 
-    def run(self):
+    def run(self, catalog_name: str) -> None:
         """
         Execute the ETL task with proper logging.
         """
         self._log_start()
         self.spark = get_spark()
         try:
-            self._write_data()
+            self._write_data(catalog_name=catalog_name)
             self._log_exit(success=True)
         except Exception as e:
             self._log_exit(success=False, error=e)
@@ -71,10 +72,29 @@ class Task(ABC):
             self.logger.error(f"Failed ETL task: {self.name} - {str(error)}")
 
     @abstractmethod
-    def _write_data(self):
+    def _write_data(self, catalog_name: str):
         """
         Process and write data.
 
         This method must be implemented by child classes.
         """
         pass
+
+
+class BronzeTaxiTask(Task):
+    """
+    Example implementation of an ETL task.
+    This task reads data, processes it, and writes the result.
+    """
+
+    def _write_data(self, catalog_name: str) -> None:
+        df = self.spark.read.table("bronze.nyctaxi_trips")
+
+        target_table = DeltaWorker(
+            catalog_name=catalog_name,
+            schema_name="bronze",
+            table_name="nyctaxi_trips",
+        )
+
+        target_table.create_table_if_not_exists(df.schema)
+        target_table.write(df, mode="overwrite")

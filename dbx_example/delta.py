@@ -121,9 +121,9 @@ class DeltaWorker(BaseModel):
             DataFrame containing the OPTIMIZE execution metrics
         """
         if where:
-            self.delta_table.optimize().where(where).executeCompaction()
+            return self.delta_table.optimize().where(where).executeCompaction()
         else:
-            self.delta_table.optimize().executeCompaction()
+            return self.delta_table.optimize().executeCompaction()
 
     def drop_table(self) -> None:
         get_spark().sql(f"DROP TABLE IF EXISTS {self.full_table_name}")
