@@ -1,3 +1,5 @@
+"""Operations for Delta tables using PySpark."""
+
 from dataclasses import dataclass
 from typing import Optional, Union
 
@@ -125,7 +127,7 @@ class DeltaWorker(BaseModel):
         else:
             return self.delta_table.optimize().executeCompaction()
 
-    def drop_table(self) -> None:
+    def drop_table_if_exists(self) -> None:
         get_spark().sql(f"DROP TABLE IF EXISTS {self.full_table_name}")
 
     def write(self, df: DataFrame, mode: str = "append", options: Optional[dict] = None):

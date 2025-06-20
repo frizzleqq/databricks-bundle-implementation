@@ -1,3 +1,5 @@
+"""Simple ETL Task class to showcase Python Wheel Task (CLI entry-point)"""
+
 import logging
 from abc import ABC, abstractmethod
 from typing import Optional

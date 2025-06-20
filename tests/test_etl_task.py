@@ -13,8 +13,10 @@ def generate_test_task(schema_name: str, table_name: str):
                 table_name=table_name,
             )
 
+            target_table.drop_table_if_exists()
+
             target_table.create_table_if_not_exists(df.schema)
-            target_table.write(df, mode="overwrite")
+            target_table.write(df, mode="append")
 
     return Task.create_etl_task("TestTask")
 

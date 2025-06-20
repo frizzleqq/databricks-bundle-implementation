@@ -25,6 +25,8 @@ def test_deltawriter_create_table_if_not_exists(spark, catalog_name, request):
         schema_name=__name__,
         table_name=f"table_{request.node.name}",
     )
+
+    delta_writer.drop_table_if_exists()
     delta_writer.create_table_if_not_exists(schema)
     assert delta_writer.delta_table is not None
     assert delta_writer.df.columns == [

@@ -1,4 +1,4 @@
-"""Utilities based on Databricks SDK."""
+"""Utilities for Databricks operations."""
 
 import json
 import os

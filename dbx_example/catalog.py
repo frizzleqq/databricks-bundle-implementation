@@ -1,3 +1,5 @@
+"""Utilities using Databricks SDK for Unity Catalog operations."""
+
 from typing import Optional
 
 from databricks.sdk import WorkspaceClient
