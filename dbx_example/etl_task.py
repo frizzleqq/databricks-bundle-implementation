@@ -83,12 +83,12 @@ class Task(ABC):
 
 class BronzeTaxiTask(Task):
     """
-    Example implementation of an ETL task.
-    This task reads data, processes it, and writes the result.
+    Ingest from the Databricks sample data into a bronze table.
     """
 
     def _write_data(self, catalog_name: str) -> None:
-        df = self.spark.read.table("bronze.nyctaxi_trips")
+        # Use Databricks sample data for demonstration
+        df = self.spark.read.table("samples.nyctaxi.trips")
 
         target_table = DeltaWorker(
             catalog_name=catalog_name,

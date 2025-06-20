@@ -2,9 +2,9 @@ from dbx_example.delta import DeltaWorker
 from dbx_example.etl_task import Task
 
 
-def generate_test_task(catalog_name: str, schema_name: str, table_name: str):
+def generate_test_task(schema_name: str, table_name: str):
     class TestTask(Task):
-        def _write_data(self):
+        def _write_data(self, catalog_name: str) -> None:
             df = self.spark.createDataFrame([(1, "test")], schema=["id", "name"])
 
             target_table = DeltaWorker(
@@ -21,11 +21,10 @@ def generate_test_task(catalog_name: str, schema_name: str, table_name: str):
 
 def test_etl_task_run(spark, catalog_name, request):
     task = generate_test_task(
-        catalog_name=catalog_name,
         schema_name=__name__,
         table_name=f"table_{request.node.name}",
     )
-    task.run()
+    task.run(catalog_name)
 
     # Verify that the data was written to the Delta table
     delta_table = DeltaWorker(
