@@ -11,6 +11,16 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
 
+## TODO:
+
+* README (local vs Databricks Connect)
+* Logging
+   * Logging to volume?
+* Catalog parameter in Workflow
+* Python based workflow
+* Workflow with Notebook tasks
+* Workflow calling Workflows
+
 ## Development
 
 ### Requirements
