@@ -16,7 +16,7 @@ class Task(ABC):
     """
 
     @classmethod
-    def create_etl_task(cls, task_name: str, name: Optional[str] = None) -> "Task":
+    def create_etl_task(cls, task_name: str) -> "Task":
         """
         Factory method to create a task instance by type.
 
@@ -24,8 +24,6 @@ class Task(ABC):
         ----------
         task_name : str
             Identifier for the task class name to create
-        name : str, optional
-            Name for the task instance (defaults to task_type if not provided)
 
         Returns
         -------
@@ -35,11 +33,11 @@ class Task(ABC):
         # Find the requested task class by name
         for subclass in cls.__subclasses__():
             if subclass.__name__ == task_name:
-                return subclass(name=name)
+                return subclass()
 
         raise ValueError(f"Unknown EtlTask: '{task_name}'. Available types: {cls.__subclasses__()}")
 
-    def __init__(self, name: str):
+    def __init__(self):
         """
         Initialize an ETL task.
 
@@ -48,7 +46,6 @@ class Task(ABC):
         name : str
             A descriptive name for the task
         """
-        self.name = name
         self.logger = logging.getLogger(__name__)
         self.spark: SparkSession
 
@@ -64,6 +61,18 @@ class Task(ABC):
         except Exception as e:
             self._log_exit(success=False, error=e)
             raise
+
+    @property
+    def name(self) -> str:
+        """
+        Get the name of the task.
+
+        Returns
+        -------
+        str
+            The name of the task class
+        """
+        return self.__class__.__name__
 
     def _log_entry(self) -> None:
         """Log the start of task execution."""
