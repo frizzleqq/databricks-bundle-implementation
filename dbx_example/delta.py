@@ -106,6 +106,25 @@ class DeltaWorker(BaseModel):
 
         return table_builder.execute()
 
+    def optimize(self, where: Optional[str] = None) -> DataFrame:
+        """
+        Optimize the Delta table.
+
+        Parameters
+        ----------
+        where : Optional[str], optional
+            Filter condition for optimization, by default None
+
+        Returns
+        -------
+        DataFrame
+            DataFrame containing the OPTIMIZE execution metrics
+        """
+        if where:
+            self.delta_table.optimize().where(where).executeCompaction()
+        else:
+            self.delta_table.optimize().executeCompaction()
+
     def drop_table(self) -> None:
         get_spark().sql(f"DROP TABLE IF EXISTS {self.full_table_name}")
 

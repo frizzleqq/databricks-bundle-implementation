@@ -4,6 +4,7 @@
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: dbx_example
+  databricks_cli_version: ">=0.248.0"
 
 include:
   - resources/*.yml

@@ -19,7 +19,8 @@ except ImportError:
 def spark() -> Generator[SparkSession, None, None]:
     if DATABRICKS_CONNECT_AVAILABLE:
         # For serverless compute, we need to set the flag explicitly
-        yield DatabricksSession.builder.serverless(True).getOrCreate()
+        spark = DatabricksSession.builder.serverless(True).getOrCreate()
+        yield spark
     else:
         # If databricks-connect is not installed, we use use local Spark session
         warehouse_dir = tempfile.TemporaryDirectory().name

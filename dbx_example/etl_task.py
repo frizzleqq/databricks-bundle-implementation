@@ -2,6 +2,10 @@ import logging
 from abc import ABC, abstractmethod
 from typing import Optional
 
+from pyspark.sql import SparkSession
+
+from dbx_example.spark import get_spark
+
 
 class Task(ABC):
     """
@@ -46,12 +50,14 @@ class Task(ABC):
         """
         self.name = name
         self.logger = logging.getLogger(__name__)
+        self.spark: SparkSession
 
     def run(self):
         """
         Execute the ETL task with proper logging.
         """
         self._log_entry()
+        self.spark = get_spark()
         try:
             self._write_data()
             self._log_exit(success=True)
@@ -92,20 +98,3 @@ class Task(ABC):
             Dictionary containing the results of the operation
         """
         pass
-
-
-# Example implementation - no registration needed
-class SimpleETLTask(Task):
-    """Example implementation of an ETL task."""
-
-    def _write_data(self):
-        """
-        Simple implementation that processes the provided data.
-
-        Returns
-        -------
-        dict
-            Dictionary with processing results
-        """
-        self.logger.info(f"Processing data in {self.name}")
-        # Implement actual data processing logic here
