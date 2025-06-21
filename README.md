@@ -26,7 +26,9 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 ### Requirements
 
 * uv: https://docs.astral.sh/uv/getting-started/installation/
+   * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
+   * ">=0.248.0" for Python based workflows
 
 ### Setup environment
 
