@@ -1,4 +1,15 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC Unfortunately on Serverless Compute it seems impossible to add dependencies in the Workflow.
+# MAGIC
+# MAGIC Databricks mentions using %pip magic command, but that seems worse.
+# MAGIC ```
+# MAGIC Error: cannot update job: A task environment can not be provided for notebook task silver_nyctaxi_aggregate. Please use the %pip magic command to install notebook-scoped Python libraries and Python wheel packages
+# MAGIC ```
+# MAGIC
+
+# COMMAND ----------
+
 from pyspark.sql import functions as F
 
 from dbx_example import catalog
