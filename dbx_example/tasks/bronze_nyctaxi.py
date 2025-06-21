@@ -13,8 +13,8 @@ class BronzeTaxiTask(Task):
 
         target_table = DeltaWorker(
             catalog_name=catalog_name,
-            schema_name="bronze",
-            table_name="nyctaxi_trips",
+            schema_name="bronze_nyctaxi",
+            table_name="trips",
         )
 
         target_table.create_table_if_not_exists(df.schema)
