@@ -16,7 +16,7 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * README (local vs Databricks Connect)
 * Logging
    * Logging to volume?
-* Catalog parameter in Workflow
+* Github Action for deployment
 * Python based workflow
 * Workflow with Notebook tasks
 * Workflow calling Workflows
