@@ -57,6 +57,16 @@ Windows:
 .venv\Scripts\activate
 ```
 
+### Unit-Tests
+
+Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+
+> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
+
+```bash
+pytest -v
+```
+
 ## Databricks Connect
 
 Example `.databrickscfg` configuration for connecting to Serverless Clusters:
