@@ -2,10 +2,10 @@
 
 This project is an example of a Databricks Asset bundle that deploys the following:
 * Python Project as Wheel
-* Python Notebooks (TODO)
+* Python Notebooks
 * Databricks Workflow examples
    * Python Wheel Task
-   * Notebook Task (TODO)
+   * Notebook Task
    * Python based workflow (TODO)
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition

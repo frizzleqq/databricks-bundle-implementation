@@ -1,5 +1,5 @@
 from dbx_example.delta import DeltaWorker
-from dbx_example.etl_task import Task
+from dbx_example.tasks.base_task import Task
 
 
 def generate_test_task(schema_name: str, table_name: str):
