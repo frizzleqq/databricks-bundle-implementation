@@ -61,6 +61,7 @@ include = [
 docstring-code-format = true
 
 [tool.ruff.lint]
+exclude = ["notebooks/**/*.py"]
 select = [
   "E", # pycodestyle
   "W", # pycodestyle
@@ -80,7 +81,7 @@ convention = "numpy"
 [tool.black]
 # This is only for Notebooks within Databricks Workspace and not used in Python project.
 line-length = 100
-target-version = ['py312']
+target-version = ['py311']
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

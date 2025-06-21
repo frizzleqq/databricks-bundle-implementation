@@ -1,8 +1,8 @@
 # Databricks Bundle Example
 
 This project is an example of a Databricks Asset bundle that deploys the following:
+
 * Python Project as Wheel
-* Python Notebooks (TODO)
 * Databricks Workflow examples
    * Python Wheel Task
    * Notebook Task (TODO)
@@ -16,7 +16,7 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * README (local vs Databricks Connect)
 * Logging
    * Logging to volume?
-* Catalog parameter in Workflow
+* Github Action for deployment
 * Python based workflow
 * Workflow with Notebook tasks
 * Workflow calling Workflows
@@ -26,7 +26,9 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 ### Requirements
 
 * uv: https://docs.astral.sh/uv/getting-started/installation/
+   * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
+   * ">=0.248.0" for Python based workflows
 
 ### Setup environment
 
@@ -55,6 +57,16 @@ source .venv/bin/activate
 Windows:
 ```powershell
 .venv\Scripts\activate
+```
+
+### Unit-Tests
+
+Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+
+> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
+
+```bash
+pytest -v
 ```
 
 ## Databricks Connect

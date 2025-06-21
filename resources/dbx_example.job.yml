@@ -15,18 +15,51 @@ resources:
       #    - your_email@example.com
 
       tasks:
-        # - task_key: notebook_task
-        #   notebook_task:
-        #     notebook_path: ../notebooks/notebook_example.ipynb
-        #     source: WORKSPACE
-
-        - task_key: ingest_nyc_taxi
+        - task_key: bronze_taxi
           python_wheel_task:
             package_name: dbx_example
             entry_point: dbx-example
             parameters:
               - BronzeTaxiTask
+              - --catalog
+              - ${var.catalog_name}
           environment_key: default
+
+        - task_key: bronze_accuweather
+          python_wheel_task:
+            package_name: dbx_example
+            entry_point: dbx-example
+            parameters:
+              - BronzeAccuweatherTask
+              - --catalog
+              - ${var.catalog_name}
+          environment_key: default
+
+        - task_key: silver_nyctaxi_aggregate
+          python_wheel_task:
+            package_name: dbx_example
+            entry_point: dbx-example
+            parameters:
+              - SilverTaxiAggTask
+              - --catalog
+              - ${var.catalog_name}
+          depends_on:
+            - task_key: bronze_taxi
+            - task_key: bronze_accuweather
+          run_if: ALL_SUCCESS
+          environment_key: default
+
+        # - task_key: silver_nyctaxi_aggregate
+        #   notebook_task:
+        #     notebook_path: ../notebooks/silver_nyctaxi_aggregate.py
+        #   depends_on:
+        #     - task_key: bronze_taxi
+        #     - task_key: bronze_accuweather
+        #   run_if: ALL_DONE
+        # Neither libraries nor environments are possible on serverless notebook tasks.
+        # Should use Job Clusters for this, but not available on Free Edition.
+        # libraries:
+        #   - whl: ../dist/*.whl
 
       # Environment required for Python tasks
       environments:
