@@ -35,9 +35,7 @@ jobs:
         distribution: "zulu"
     - name: Install the project
       run: uv sync --locked --extra dev --dev
-    - name: Run Linting
-      run: uv run ruff check
-    - name: Run Format check
-      run: uv run ruff format --check
+    - name: Run Code checks
+      run: uv run hatch run check
     - name: Run tests
-      run: uv run pytest -v
+      run: uv run hatch run test

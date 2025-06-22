@@ -27,12 +27,12 @@ dbx-example = "dbx_example.cli:main"
 
 [project.optional-dependencies]
 dev = [
-    "databricks-bundles",
-    "ipykernel",    # For Notebooks
-    "mypy",         # Type hints
-    "pip",          # Databricks extension needs it
-    "pytest",       # Unit testing
-    "ruff",         # Linting/Formatting
+    "databricks-bundles", # For Python-based Workflows
+    "hatch",
+    "mypy", # Type hints
+    "pip", # Databricks extension needs it
+    "pytest", # Unit testing
+    "ruff", # Linting/Formatting
 ]
 connect = [
     # alternatively use databricks-connect plugin to install
@@ -45,6 +45,17 @@ installer = "uv"
 [tool.hatch.build]
 sources = ["."]
 include = ["dbx_example*"]
+
+[tool.hatch.envs.default.scripts]
+check = [
+    "ruff check",
+    "ruff format --check",
+]
+fix = [
+    "ruff check --fix",
+    "ruff format",
+]
+test = "pytest -v"
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
