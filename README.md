@@ -4,20 +4,18 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 
 * Python Project as Wheel
 * Databricks Workflow examples
-   * Python Wheel Task
+   * YAML-based Workflow
+   * Python-based workflow
    * Notebook Task (TODO)
-   * Python based workflow (TODO)
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
 
 ## TODO:
 
-* README (local vs Databricks Connect)
 * Logging
    * Logging to volume?
 * Github Action for deployment
-* Python based workflow
 * Workflow with Notebook tasks
 * Workflow calling Workflows
 
@@ -57,15 +55,18 @@ Windows:
 
 ### Unit-Tests
 
-Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
-
-> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
-
 ```bash
 pytest -v
 ```
 
+Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+* On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
+
+> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
+
 ## Databricks Connect
+
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databricks Connect in VS Code. Note that unit-tests run on Databricks or on local Spark cluster depending on whether Databricks Connect is available.
 
 Example `.databrickscfg` configuration for connecting to Serverless Clusters:
 ```
