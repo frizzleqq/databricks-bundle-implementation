@@ -10,6 +10,12 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
+* For this example we created in the Workspace:
+   * `lake_dev`, `lake_test` and `lake_prod` catalog
+   * service principals (for assigning Workflow runners)
+      * Make sure the User used to deploy has `Service principal: User`
+   * `group_etl` group with `ALL PRIVILEGES` on the catalogs
+      * your user and the service principals should be members
 
 ## TODO:
 
@@ -111,5 +117,9 @@ serverless_compute_id = auto
    sys.path.append("../src")
    ```
 * Service Principals
+
+   For this example, the targets `test` and `prod` use a group and service principals.
+
+   The group `group_etl` can manage the workflow, ideally your user and the service principal are part of it. This group should also have sufficient permissions on the used Catalogs.
 
    Make sure the User used to deploy has `Service principal: User` permissions. `Service principal: Manager` is not enough.
