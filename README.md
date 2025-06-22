@@ -32,19 +32,15 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 
 ### Setup environment
 
-Create virtual environment
-```bash
-uv venv
-```
-
-Install Python dependencies:
-```bash
-uv pip install --editable .[dev]
-```
-
-Alternatively sync entire `uv` environment:
+Sync entire `uv` environment:
 ```bash
 uv sync --extra dev
+```
+
+Alternatively create virtual environment and install dependencies:
+```bash
+uv venv
+uv pip install --editable .[dev]
 ```
 
 ### Activate virtual environment
