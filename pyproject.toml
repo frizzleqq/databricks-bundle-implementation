@@ -65,8 +65,10 @@ line-length = 100
 include = [
     "pyproject.toml",
     "dbx_example/**/*.py",
+    "resources/**/*.py",
     "tests/**/*.py",
-    "notebooks/**/*.py"]
+    "notebooks/**/*.py",
+]
 
 [tool.ruff.format]
 docstring-code-format = true
