@@ -27,7 +27,7 @@ dbx-example = "dbx_example.cli:main"
 
 [project.optional-dependencies]
 dev = [
-    "databricks-bundles", # For Python-based Workflows
+    "databricks-bundles>=0.248.0", # For Python-based Workflows
     "hatch",
     "mypy", # Type hints
     "pip", # Databricks extension needs it
@@ -65,8 +65,10 @@ line-length = 100
 include = [
     "pyproject.toml",
     "dbx_example/**/*.py",
+    "resources/**/*.py",
     "tests/**/*.py",
-    "notebooks/**/*.py"]
+    "notebooks/**/*.py",
+]
 
 [tool.ruff.format]
 docstring-code-format = true

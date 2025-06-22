@@ -4,20 +4,24 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 
 * Python Project as Wheel
 * Databricks Workflow examples
-   * Python Wheel Task
+   * YAML-based Workflow
+   * Python-based workflow
    * Notebook Task (TODO)
-   * Python based workflow (TODO)
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
+* For this example we created in the Workspace:
+   * `lake_dev`, `lake_test` and `lake_prod` catalog
+   * service principals (for assigning Workflow runners)
+      * Make sure the User used to deploy has `Service principal: User`
+   * `group_etl` group with `ALL PRIVILEGES` on the catalogs
+      * your user and the service principals should be members
 
 ## TODO:
 
-* README (local vs Databricks Connect)
 * Logging
    * Logging to volume?
 * Github Action for deployment
-* Python based workflow
 * Workflow with Notebook tasks
 * Workflow calling Workflows
 
@@ -43,7 +47,7 @@ uv venv
 uv pip install --editable .[dev]
 ```
 
-### Activate virtual environment
+### (Optional) Activate virtual environment
 
 Bash:
 ```bash
@@ -57,15 +61,18 @@ Windows:
 
 ### Unit-Tests
 
+```bash
+uv run pytest -v
+```
+
 Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+* On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
 
-```bash
-pytest -v
-```
-
 ## Databricks Connect
+
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databricks Connect in VS Code. Note that unit-tests run on Databricks or on local Spark cluster depending on whether Databricks Connect is available.
 
 Example `.databrickscfg` configuration for connecting to Serverless Clusters:
 ```
@@ -110,5 +117,9 @@ serverless_compute_id = auto
    sys.path.append("../src")
    ```
 * Service Principals
+
+   For this example, the targets `test` and `prod` use a group and service principals.
+
+   The group `group_etl` can manage the workflow, ideally your user and the service principal are part of it. This group should also have sufficient permissions on the used Catalogs.
 
    Make sure the User used to deploy has `Service principal: User` permissions. `Service principal: Manager` is not enough.

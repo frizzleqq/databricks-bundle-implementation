@@ -17,7 +17,7 @@ def main():
 
     for component in args.components:
         try:
-            task = Task.create_etl_task(component)
+            task = Task.create_task_factory(component)
             task.run(catalog_name=args.catalog)
         except ValueError as e:
             print(f"Error with component '{component}': {e}")

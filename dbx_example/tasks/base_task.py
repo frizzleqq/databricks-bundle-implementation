@@ -18,7 +18,11 @@ class Task(ABC):
     """
 
     @classmethod
-    def create_etl_task(cls, task_name: str) -> "Task":
+    def get_class_name(cls) -> str:
+        return cls.__name__
+
+    @classmethod
+    def create_task_factory(cls, task_name: str) -> "Task":
         """
         Factory method to create a task instance by type.
 
@@ -29,15 +33,15 @@ class Task(ABC):
 
         Returns
         -------
-        ETLTask
+        Task
             An instance of the requested task type
         """
         # Find the requested task class by name
         for subclass in cls.__subclasses__():
-            if subclass.__name__ == task_name:
+            if subclass.get_class_name() == task_name:
                 return subclass()
 
-        raise ValueError(f"Unknown EtlTask: '{task_name}'. Available types: {cls.__subclasses__()}")
+        raise ValueError(f"Unknown Task: '{task_name}'. Available types: {cls.__subclasses__()}")
 
     def __init__(self):
         """
@@ -48,7 +52,10 @@ class Task(ABC):
 
     @property
     def name(self) -> str:
-        return self.__class__.__name__
+        """
+        Get the name of the task.
+        """
+        return self.get_class_name()
 
     def run(self, catalog_name: str) -> None:
         """
