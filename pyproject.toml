@@ -27,7 +27,7 @@ dbx-example = "dbx_example.cli:main"
 
 [project.optional-dependencies]
 dev = [
-    "databricks-bundles", # For Python-based Workflows
+    "databricks-bundles>=0.248.0", # For Python-based Workflows
     "hatch",
     "mypy", # Type hints
     "pip", # Databricks extension needs it

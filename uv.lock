@@ -262,7 +262,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "databricks-bundles", marker = "extra == 'dev'" },
+    { name = "databricks-bundles", marker = "extra == 'dev'", specifier = ">=0.248.0" },
     { name = "databricks-connect", marker = "extra == 'connect'", specifier = ">=15.1,<15.2" },
     { name = "databricks-sdk", specifier = "==0.57.0" },
     { name = "delta-spark", specifier = ">=3.2.0,<4.0.0" },

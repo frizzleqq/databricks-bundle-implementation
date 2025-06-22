@@ -6,11 +6,6 @@ bundle:
   name: dbx_example
   databricks_cli_version: ">=0.248.0"
 
-variables:
-  catalog_name:
-    description: The name of the catalog to use for this bundle.
-    default: "lake_dev"
-
 include:
   - resources/*.yml
 
@@ -29,23 +24,28 @@ artifacts:
     type: whl
     build: uv run hatch build --target wheel
     path: .
-  
-# experimental:
-#   python:
-#     # Activate the virtual environment before loading resources defined in
-#     # Python. If disabled, it defaults to using the Python interpreter
-#     # available in the current shell.
-#     venv_path: .venv
-#     # Functions called to load resources defined in Python.
-#     # See resources/__init__.py
-#     resources:
-#       - 'resources:load_resources'
-#     mutators: []
+
+experimental:
+  python:
+    # Activate the virtual environment before loading resources defined in
+    # Python. If disabled, it defaults to using the Python interpreter
+    # available in the current shell.
+    venv_path: .venv
+    # Functions called to load resources defined in Python.
+    # See resources/__init__.py
+    resources:
+      - "resources:load_resources"
+    mutators: []
 
 workspace:
   file_path: ${workspace.root_path}/
   artifact_path: ${workspace.root_path}/.artifacts
   state_path: ${workspace.root_path}/.state
+
+variables:
+  catalog_name:
+    description: The name of the catalog to use for this bundle.
+    default: "lake_dev"
 
 targets:
   dev:
@@ -73,10 +73,10 @@ targets:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
     permissions:
-     - group_name: group_etl
-       level: CAN_MANAGE
+      - group_name: group_etl
+        level: CAN_MANAGE
     run_as:
-     service_principal_name: 280a0e2e-369a-440f-8bf1-8da8c975e077
+      service_principal_name: 280a0e2e-369a-440f-8bf1-8da8c975e077
 
   prod:
     mode: production
@@ -88,7 +88,7 @@ targets:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
     permissions:
-     - group_name: group_etl
-       level: CAN_MANAGE
+      - group_name: group_etl
+        level: CAN_MANAGE
     run_as:
-     service_principal_name: 255b38e1-a8ec-40cf-8e27-e640276bef5d
+      service_principal_name: 255b38e1-a8ec-40cf-8e27-e640276bef5d
