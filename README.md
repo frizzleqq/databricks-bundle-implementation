@@ -41,7 +41,7 @@ uv venv
 uv pip install --editable .[dev]
 ```
 
-### Activate virtual environment
+### (Optional) Activate virtual environment
 
 Bash:
 ```bash
@@ -56,7 +56,7 @@ Windows:
 ### Unit-Tests
 
 ```bash
-pytest -v
+uv run pytest -v
 ```
 
 Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
