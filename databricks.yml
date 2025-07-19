@@ -2,7 +2,7 @@
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: dbx_example
-  databricks_cli_version: ">=0.260.0"
+  databricks_cli_version: ">=0.259.0"
 
 variables:
   catalog_name:
@@ -48,6 +48,10 @@ workspace:
   artifact_path: ${workspace.root_path}/.artifacts
   state_path: ${workspace.root_path}/.state
 
+permissions:
+  - group_name: group_etl 
+    level: CAN_MANAGE
+
 targets:
   dev:
     # The default target uses 'mode: development' to create a development copy.
@@ -67,15 +71,13 @@ targets:
   test:
     mode: production
     presets:
+      name_prefix: "[test] "
       trigger_pause_status: UNPAUSED
     variables:
       catalog_name: "lake_test"
     workspace:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
-    permissions:
-      - group_name: group_etl
-        level: CAN_MANAGE
     run_as:
       service_principal_name: 280a0e2e-369a-440f-8bf1-8da8c975e077
 
@@ -88,8 +90,5 @@ targets:
     workspace:
       host: https://dbc-ea4bb8e5-6935.cloud.databricks.com
       root_path: /Workspace/bundle/${bundle.name}/${bundle.target}
-    permissions:
-      - group_name: group_etl
-        level: CAN_MANAGE
     run_as:
       service_principal_name: 255b38e1-a8ec-40cf-8e27-e640276bef5d
