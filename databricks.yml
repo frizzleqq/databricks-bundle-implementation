@@ -28,7 +28,7 @@ sync:
 artifacts:
   dbx_example:
     type: whl
-    build: uv run hatch build --target wheel
+    build: uv build --wheel
     path: .
 
 experimental:

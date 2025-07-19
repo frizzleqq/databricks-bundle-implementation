@@ -19,13 +19,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11"]
+        python-version: ["3.12"]
 
     steps:
     - uses: actions/checkout@v4
     - name: Install uv and set the python version
       uses: astral-sh/setup-uv@v5
       with:
+        version: "0.8.0"
         python-version: ${{ matrix.python-version }}
         enable-cache: true
     - name: Setup Java JDK
@@ -34,8 +35,10 @@ jobs:
         java-version: 17
         distribution: "zulu"
     - name: Install the project
-      run: uv sync --locked --extra dev --dev
-    - name: Run Code checks
-      run: uv run hatch run check
+      run: uv sync --locked --extra dev_local
+    - name: Run code checks
+      run: uv run ruff check
+    - name: Check code formatting
+      run: uv run ruff format --check
     - name: Run tests
-      run: uv run hatch run test
+      run: uv run pytest -v

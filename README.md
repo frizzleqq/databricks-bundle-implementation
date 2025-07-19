@@ -32,7 +32,7 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * uv: https://docs.astral.sh/uv/getting-started/installation/
    * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
-   * ">=0.248.0" for Python based workflows
+   * ">=0.260.0" for Python based workflows with `environment_version`
 
 ### Setup environment
 
@@ -57,6 +57,12 @@ source .venv/bin/activate
 Windows:
 ```powershell
 .venv\Scripts\activate
+```
+
+### (Optional) Sync with local spark/delta instead of Databricks-connect
+
+```bash
+uv sync --extra dev_local
 ```
 
 ### Unit-Tests
