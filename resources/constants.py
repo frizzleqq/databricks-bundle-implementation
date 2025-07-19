@@ -21,7 +21,7 @@ class Variables:
 DEFAULT_ENVIRONMENT = JobEnvironment(
     environment_key="default",
     spec=Environment(
-        client=Variables.serverless_environment_version, dependencies=["./dist/*.whl"]
+        environment_version=Variables.serverless_environment_version, dependencies=["./dist/*.whl"]
     ),
 )
 

@@ -68,6 +68,8 @@ resources:
           # Full documentation of this spec can be found at:
           # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
           spec:
-            client: ${var.serverless_environment_version}
+            # If we use Python-based Workflows, we need to specify environment_version instead of client.
+            # client: ${var.serverless_environment_version}
+            environment_version: ${var.serverless_environment_version}
             dependencies:
               - ../dist/*.whl
