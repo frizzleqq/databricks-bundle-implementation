@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.8.0,<0.9"]
+build-backend = "uv_build"
 
 [project]
 name = "dbx_example"
@@ -8,54 +8,49 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 authors = [
-    { name = "Florian Fritz", email = "todo@test.com" }
+    { name = "Florian Fritz", email = "flo.fritz@protonmail.com" }
 ]
-requires-python = ">=3.11"
-urls.homepage = "todo"
+requires-python = ">=3.12"
+urls.homepage = "https://github.com/frizzleqq/databricks-bundle-implementation"
 
-# Roughly based on Databricks runtime 15.1
-# https://docs.databricks.com/aws/en/release-notes/serverless/#version-151
+# Roughly based on Databricks runtime 16.3: https://docs.databricks.com/aws/en/release-notes/serverless/#version-163
+# Note that we do not include pre-installed libraries like "pydantic" in the runtime-dependencies here
 dependencies = [
     "databricks-sdk==0.57.0",
-    "delta-spark>=3.2.0, <4.0.0",
-    "pydantic==1.10.6",
-    "pyspark>=3.5.0, <4.0.0",
 ]
-
-[project.scripts]
-dbx-example = "dbx_example.cli:main"
 
 [project.optional-dependencies]
 dev = [
-    "databricks-bundles>=0.248.0", # For Python-based Workflows
-    "hatch",
+    # Databricks Runtime (connect includes delta/pyspark)
+    "databricks-connect~=16.3.0",
+    "pydantic==2.8.2",
+    # Tooling
+    "databricks-bundles~=0.260.0", # For Python-based Workflows
     "mypy", # Type hints
     "pip", # Databricks extension needs it
     "pytest", # Unit testing
     "ruff", # Linting/Formatting
 ]
-connect = [
-    # alternatively use databricks-connect plugin to install
-    "databricks-connect>=15.1,<15.2",
+# Is this really needed?
+dev_local = [
+    # Databricks Runtime (connect includes delta/pyspark)
+    "delta-spark>=3.3.0, <4.0.0",
+    "pydantic==2.8.2",
+    "pyspark>=3.5.0, <4.0.0",
+    # Tooling
+    "databricks-bundles~=0.260.0", # For Python-based Workflows
+    "mypy", # Type hints
+    "pip", # Databricks extension needs it
+    "pytest", # Unit testing
+    "ruff", # Linting/Formatting
 ]
 
-[tool.hatch.envs.default]
-installer = "uv"
+[project.scripts]
+dbx-example = "dbx_example.cli:main"
 
-[tool.hatch.build]
-sources = ["."]
-include = ["dbx_example*"]
-
-[tool.hatch.envs.default.scripts]
-check = [
-    "ruff check",
-    "ruff format --check",
-]
-fix = [
-    "ruff check --fix",
-    "ruff format",
-]
-test = "pytest -v"
+[tool.uv.build-backend]
+module-name = "dbx_example"
+module-root = ""
 
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
@@ -94,7 +89,7 @@ convention = "numpy"
 [tool.black]
 # This is only for Notebooks within Databricks Workspace and not used in Python project.
 line-length = 100
-target-version = ['py311']
+target-version = ['py312']
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

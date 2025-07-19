@@ -4,12 +4,11 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 
 * Python Project as Wheel
 * Databricks Workflow examples
-   * YAML-based Workflow
    * Python-based workflow
-   * Notebook Task (TODO)
+   * YAML-based Workflow
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
-* This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
+* Using serverless environment version 3, which is similar to Databricks Runtime 16.3
 * For this example we created in the Workspace:
    * `lake_dev`, `lake_test` and `lake_prod` catalog
    * service principals (for assigning Workflow runners)
@@ -22,8 +21,7 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * Logging
    * Logging to volume?
 * Github Action for deployment
-* Workflow with Notebook tasks
-* Workflow calling Workflows
+* maybe dbt
 
 ## Development
 
@@ -32,7 +30,7 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * uv: https://docs.astral.sh/uv/getting-started/installation/
    * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
-   * ">=0.248.0" for Python based workflows
+   * ">=0.259.0" for Python based workflows with `environment_version`
 
 ### Setup environment
 
@@ -47,7 +45,7 @@ uv venv
 uv pip install --editable .[dev]
 ```
 
-### (Optional) Activate virtual environment
+#### (Optional) Activate virtual environment
 
 Bash:
 ```bash
@@ -59,28 +57,26 @@ Windows:
 .venv\Scripts\activate
 ```
 
+#### (Optional) Sync with local spark/delta instead of Databricks-connect
+
+```bash
+uv sync --extra dev_local
+```
+
 ### Unit-Tests
 
 ```bash
 uv run pytest -v
 ```
 
-Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+Based on whether Databricks Connect (the `dev` default) is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
 * On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
 
 ## Databricks Connect
 
-See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databricks Connect in VS Code. Note that unit-tests run on Databricks or on local Spark cluster depending on whether Databricks Connect is available.
-
-Example `.databrickscfg` configuration for connecting to Serverless Clusters:
-```
-[DEFAULT]
-host  = https://....databricks.com
-token = ...
-serverless_compute_id = auto
-```
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databricks Connect in VS Code.
 
 ## Databricks CLI
 

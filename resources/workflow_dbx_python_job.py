@@ -1,6 +1,5 @@
 import json
 
-from databricks.bundles.core import Variable, variables
 from databricks.bundles.jobs import (
     Job,
     PythonWheelTask,
@@ -9,15 +8,16 @@ from databricks.bundles.jobs import (
 )
 
 from dbx_example import tasks
-from resources.constants import DAILY_TRIGGER, DEFAULT_ENVIRONMENT, ENTRY_POINT, PACKAGE_NAME
+from resources.constants import (
+    DAILY_TRIGGER,
+    DEFAULT_ENVIRONMENT,
+    ENTRY_POINT,
+    PACKAGE_NAME,
+    Variables,
+)
 
 # Workflow Settings
-JOB_NAME = "py_dbx_example_job"
-
-
-@variables
-class Variables:
-    catalog_name: Variable[str]
+JOB_NAME = "dbx_python_job"
 
 
 def create_generic_task(

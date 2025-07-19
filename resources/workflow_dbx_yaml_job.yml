@@ -1,8 +1,8 @@
 # The main job for dbx_example.
 resources:
   jobs:
-    dbx_example_job:
-      name: dbx_example_job
+    dbx_yaml_job:
+      name: dbx_yaml_job
 
       trigger:
         # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
@@ -68,6 +68,8 @@ resources:
           # Full documentation of this spec can be found at:
           # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
           spec:
-            client: "2"
+            # If we use Python-based Workflows, we need to specify environment_version instead of client.
+            # client: ${var.serverless_environment_version}
+            environment_version: ${var.serverless_environment_version}
             dependencies:
               - ../dist/*.whl
