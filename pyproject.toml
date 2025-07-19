@@ -13,13 +13,10 @@ authors = [
 requires-python = ">=3.12"
 urls.homepage = "todo"
 
-# Roughly based on Databricks runtime 16.3
-# https://docs.databricks.com/aws/en/release-notes/serverless/#version-163
+# Roughly based on Databricks runtime 16.3: https://docs.databricks.com/aws/en/release-notes/serverless/#version-163
+# Note that we do not include pre-installed libraries like "pydantic" in the runtime-dependencies here
 dependencies = [
     "databricks-sdk==0.57.0",
-    "delta-spark>=3.3.0, <4.0.0",
-    "pydantic~=2.8.0",
-    "pyspark>=3.5.0, <4.0.0",
 ]
 
 [project.scripts]
@@ -27,6 +24,10 @@ dbx-example = "dbx_example.cli:main"
 
 [project.optional-dependencies]
 dev = [
+    # Databricks Runtime (connect includes delta/pyspark)
+    "databricks-connect~=16.3.0",
+    "pydantic==2.8.2",
+    # Tooling
     "databricks-bundles~=0.260.0", # For Python-based Workflows
     "hatch",
     "mypy", # Type hints
@@ -34,9 +35,19 @@ dev = [
     "pytest", # Unit testing
     "ruff", # Linting/Formatting
 ]
-connect = [
-    # alternatively use databricks-connect plugin to install
-    "databricks-connect~=16.3.0",
+# Is this really needed?
+dev_local = [
+    # Databricks Runtime (connect includes delta/pyspark)
+    "delta-spark>=3.3.0, <4.0.0",
+    "pydantic==2.8.2",
+    "pyspark>=3.5.0, <4.0.0",
+    # Tooling
+    "databricks-bundles~=0.260.0", # For Python-based Workflows
+    "hatch",
+    "mypy", # Type hints
+    "pip", # Databricks extension needs it
+    "pytest", # Unit testing
+    "ruff", # Linting/Formatting
 ]
 
 [tool.hatch.envs.default]

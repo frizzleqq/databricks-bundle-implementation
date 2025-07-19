@@ -17,7 +17,7 @@ from resources.constants import (
 )
 
 # Workflow Settings
-JOB_NAME = "py_dbx_example_job"
+JOB_NAME = "dbx_python_job"
 
 
 def create_generic_task(
