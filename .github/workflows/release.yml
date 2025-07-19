@@ -1,26 +1,24 @@
-name: "Deploy Databricks Bundle to Test"
+name: "Release Databricks Bundle to Prod"
 
-on:
-  push:
-    branches: [ "main" ]
+on: workflow_dispatch
 
 permissions:
   contents: read
 
 jobs:
-  deploy-test:
+  release:
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.12"]
-    environment: test
+    environment: prod
     env:
       DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
       DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
       DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
-      DATABRICKS_BUNDLE_ENV: test
+      DATABRICKS_BUNDLE_ENV: prod
 
     steps:
     - uses: actions/checkout@v4
@@ -38,5 +36,5 @@ jobs:
     - name: Run Databricks CLI commands
       run: databricks current-user me
     - name: Deploy Databricks Bundle
-      run: databricks bundle deploy
+      run: databricks bundle deploy --target prod
       working-directory: .
