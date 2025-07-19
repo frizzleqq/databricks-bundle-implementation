@@ -9,7 +9,7 @@ This project is an example of a Databricks Asset bundle that deploys the followi
    * Notebook Task (TODO)
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
-* This seems to use Clusters with Databricks Runtime 15.1, which the dependencies are based on
+* Using serverless environment version 3, which is similar to Databricks Runtime 16.3
 * For this example we created in the Workspace:
    * `lake_dev`, `lake_test` and `lake_prod` catalog
    * service principals (for assigning Workflow runners)

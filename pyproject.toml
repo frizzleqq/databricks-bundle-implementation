@@ -10,15 +10,15 @@ readme = "README.md"
 authors = [
     { name = "Florian Fritz", email = "todo@test.com" }
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 urls.homepage = "todo"
 
-# Roughly based on Databricks runtime 15.1
-# https://docs.databricks.com/aws/en/release-notes/serverless/#version-151
+# Roughly based on Databricks runtime 16.3
+# https://docs.databricks.com/aws/en/release-notes/serverless/#version-163
 dependencies = [
     "databricks-sdk==0.57.0",
-    "delta-spark>=3.2.0, <4.0.0",
-    "pydantic==1.10.6",
+    "delta-spark>=3.3.0, <4.0.0",
+    "pydantic~=2.8.0",
     "pyspark>=3.5.0, <4.0.0",
 ]
 
@@ -36,7 +36,7 @@ dev = [
 ]
 connect = [
     # alternatively use databricks-connect plugin to install
-    "databricks-connect>=15.1,<15.2",
+    "databricks-connect~=16.3.0",
 ]
 
 [tool.hatch.envs.default]
@@ -94,7 +94,7 @@ convention = "numpy"
 [tool.black]
 # This is only for Notebooks within Databricks Workspace and not used in Python project.
 line-length = 100
-target-version = ['py311']
+target-version = ['py312']
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

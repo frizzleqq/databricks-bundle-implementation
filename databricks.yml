@@ -4,6 +4,14 @@ bundle:
   name: dbx_example
   databricks_cli_version: ">=0.248.0"
 
+variables:
+  catalog_name:
+    description: The name of the catalog to use for this bundle.
+    default: "lake_dev"
+  serverless_environment_version:
+    description: The serverless environment to use for this bundle.
+    default: "3"
+
 include:
   - resources/*.yml
 
@@ -39,11 +47,6 @@ workspace:
   file_path: ${workspace.root_path}/
   artifact_path: ${workspace.root_path}/.artifacts
   state_path: ${workspace.root_path}/.state
-
-variables:
-  catalog_name:
-    description: The name of the catalog to use for this bundle.
-    default: "lake_dev"
 
 targets:
   dev:
