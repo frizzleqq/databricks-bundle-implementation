@@ -1,4 +1,4 @@
-name: "Unit test local"
+name: "CI local"
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  test-local:
+  ci-local:
 
     runs-on: ubuntu-latest
     strategy:
