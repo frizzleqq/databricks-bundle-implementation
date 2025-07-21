@@ -11,6 +11,9 @@ variables:
   serverless_environment_version:
     description: The serverless environment to use for this bundle.
     default: "3"
+  dbt_warehouse_id:
+    description: The ID of the SQL warehouse to use for dbt tasks.
+    default: "c31436beb8eee93c"
 
 include:
   - resources/*.yml

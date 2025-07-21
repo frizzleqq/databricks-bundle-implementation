@@ -49,6 +49,19 @@ resources:
           run_if: ALL_SUCCESS
           environment_key: default
 
+        - task_key: dbt_test
+          dbt_task:
+            commands:
+              - dbt deps
+              - dbt build
+            warehouse_id: ${var.dbt_sql_warehouse_id}
+            entry_point: dbx-example
+            parameters:
+              - BronzeAccuweatherTask
+              - --catalog
+              - ${var.catalog_name}
+          environment_key: default
+
         # - task_key: silver_nyctaxi_aggregate
         #   notebook_task:
         #     notebook_path: ../notebooks/silver_nyctaxi_aggregate.py
