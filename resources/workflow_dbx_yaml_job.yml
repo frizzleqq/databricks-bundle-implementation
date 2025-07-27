@@ -10,12 +10,9 @@ resources:
           interval: 1
           unit: DAYS
 
-      #email_notifications:
-      #  on_failure:
-      #    - your_email@example.com
-
       tasks:
         - task_key: bronze_taxi
+          environment_key: default
           python_wheel_task:
             package_name: dbx_example
             entry_point: dbx-example
@@ -23,9 +20,9 @@ resources:
               - BronzeTaxiTask
               - --catalog
               - ${var.catalog_name}
-          environment_key: default
 
         - task_key: bronze_accuweather
+          environment_key: default
           python_wheel_task:
             package_name: dbx_example
             entry_point: dbx-example
@@ -33,9 +30,9 @@ resources:
               - BronzeAccuweatherTask
               - --catalog
               - ${var.catalog_name}
-          environment_key: default
 
         - task_key: silver_nyctaxi_aggregate
+          environment_key: default
           python_wheel_task:
             package_name: dbx_example
             entry_point: dbx-example
@@ -47,32 +44,6 @@ resources:
             - task_key: bronze_taxi
             - task_key: bronze_accuweather
           run_if: ALL_SUCCESS
-          environment_key: default
-
-        - task_key: dbt_test
-          dbt_task:
-            commands:
-              - dbt deps
-              - dbt build
-            warehouse_id: ${var.dbt_sql_warehouse_id}
-            entry_point: dbx-example
-            parameters:
-              - BronzeAccuweatherTask
-              - --catalog
-              - ${var.catalog_name}
-          environment_key: default
-
-        # - task_key: silver_nyctaxi_aggregate
-        #   notebook_task:
-        #     notebook_path: ../notebooks/silver_nyctaxi_aggregate.py
-        #   depends_on:
-        #     - task_key: bronze_taxi
-        #     - task_key: bronze_accuweather
-        #   run_if: ALL_DONE
-        # Neither libraries nor environments are possible on serverless notebook tasks.
-        # Should use Job Clusters for this, but not available on Free Edition.
-        # libraries:
-        #   - whl: ../dist/*.whl
 
       # Environment required for Python tasks
       environments:
