@@ -1,4 +1,4 @@
-name: "Validate Databricks Bundle"
+name: "Validate Bundle"
 
 on:
   pull_request:

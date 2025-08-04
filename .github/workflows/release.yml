@@ -1,4 +1,4 @@
-name: "Release Databricks Bundle to Prod"
+name: "Release Bundle to Prod"
 
 on: workflow_dispatch
 

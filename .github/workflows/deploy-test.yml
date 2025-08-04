@@ -1,4 +1,4 @@
-name: "Deploy Databricks Bundle to Test"
+name: "Deploy Bundle to Test"
 
 on:
   push:
