@@ -13,3 +13,6 @@ wheels/
 .databricks/
 scratch/**
 !scratch/README.md
+
+# dbt (if run from root)
+logs/

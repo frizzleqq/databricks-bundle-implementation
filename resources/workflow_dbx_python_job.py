@@ -2,6 +2,7 @@ import json
 
 from databricks.bundles.jobs import (
     Job,
+    PerformanceTarget,
     PythonWheelTask,
     RunIf,
     Task,
@@ -63,6 +64,7 @@ py_dbx_example_job = Job(
         ),
     ],
     environments=[DEFAULT_ENVIRONMENT],
+    performance_target=PerformanceTarget.STANDARD,
 )
 
 

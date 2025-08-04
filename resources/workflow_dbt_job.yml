@@ -1,0 +1,37 @@
+# The main job for dbx_example.
+resources:
+  jobs:
+    dbt_job:
+      name: dbt_job
+
+      trigger:
+        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+        periodic:
+          interval: 1
+          unit: DAYS
+
+      tasks:
+    
+        - task_key: dbt_test
+          environment_key: dbt-default
+          dbt_task:
+            project_directory: ../dbt
+            commands:
+              - dbt seed
+              - dbt build
+            warehouse_id: ${var.dbt_sql_warehouse_id}
+            catalog: ${var.catalog_name}
+            schema: default
+            
+
+      # Environment required for Python tasks
+      environments:
+        - environment_key: dbt-default
+
+          # Full documentation of this spec can be found at:
+          # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
+          spec:
+            environment_version: ${var.serverless_environment_version}
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0
+      performance_target: STANDARD

@@ -4,8 +4,8 @@ This project is an example of a Databricks Asset bundle that deploys the followi
 
 * Python Project as Wheel
 * Databricks Workflow examples
-   * Python-based workflow
-   * YAML-based Workflow
+   * Python-based workflow using Python Wheel tasks
+   * YAML-based Workflow using dbt tasks
 
 Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 * Using serverless environment version 3, which is similar to Databricks Runtime 16.3
@@ -18,10 +18,11 @@ Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
 
 ## TODO:
 
+* Script to create setup (catalogs, groups, volumes)
+* Resources (volume, schema, permissions)
+* Streaming example
 * Logging
-   * Logging to volume?
-* Github Action for deployment
-* maybe dbt
+   * Logging to volume
 
 ## Development
 
@@ -119,3 +120,10 @@ See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databr
    The group `group_etl` can manage the workflow, ideally your user and the service principal are part of it. This group should also have sufficient permissions on the used Catalogs.
 
    Make sure the User used to deploy has `Service principal: User` permissions. `Service principal: Manager` is not enough.
+* dbt project
+
+   The `dbt` project is based on https://github.com/dbt-labs/jaffle_shop_duckdb with following changes:
+
+   * Schema bronze, silver, gold
+   * document materialization `use_materialization_v2`
+   * Primary, Foreign Key Constraints

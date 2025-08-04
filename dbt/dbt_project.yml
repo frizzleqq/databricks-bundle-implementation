@@ -1,0 +1,35 @@
+name: 'jaffle_shop'
+version: '1.0.0'
+
+profile: 'jaffle_shop'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+seeds:
+  jaffle_shop:
+    +schema: bronze_jaffle_shop
+
+models:
+  jaffle_shop:
+    staging:
+      +schema: silver
+      +materialized: table
+    mart:
+      +schema: gold
+      +materialized: table
+      # +docs:
+        # node_color: 'silver'
+    # +docs:
+      # node_color: 'gold'
+
+flags:
+  use_materialization_v2: True  # Use the new databricks behaviour
