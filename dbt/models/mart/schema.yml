@@ -7,6 +7,8 @@ models:
     columns:
       - name: customer_id
         description: This is a unique identifier for a customer
+        constraints:
+          - type: primary_key
         tests:
           - unique
           - not_null
@@ -34,13 +36,19 @@ models:
 
     columns:
       - name: order_id
+        description: This is a unique identifier for an order
+        constraints:
+          - type: primary_key
         tests:
           - unique
           - not_null
-        description: This is a unique identifier for an order
 
       - name: customer_id
         description: Foreign key to the customers table
+        constraints:
+          - type: foreign_key
+            to: ref('customers')
+            to_columns: ["customer_id"]
         tests:
           - not_null
           - relationships:

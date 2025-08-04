@@ -1,13 +1,13 @@
-resources:
-  volumes:
-    checkpoints_volume:
-      name: checkpoints
-      catalog_name: ${var.catalog_name}
-      schema_name: default
-      # grants:
-      #   - privileges:
-      #       - ALL PRIVILEGES
-      #     principal: group_etl
-      #   - privileges:
-      #       - READ VOLUME
-      #     principal: group_reader
+# resources:
+#   volumes:
+#     checkpoints_volume:
+#       name: checkpoints
+#       catalog_name: ${var.catalog_name}
+#       schema_name: default
+#       # grants:
+#       #   - privileges:
+#       #       - ALL PRIVILEGES
+#       #     principal: group_etl
+#       #   - privileges:
+#       #       - READ VOLUME
+#       #     principal: group_reader

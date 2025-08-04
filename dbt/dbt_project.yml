@@ -16,15 +16,15 @@ clean-targets:
 
 seeds:
   jaffle_shop:
-    +schema: raw
+    +schema: bronze_jaffle_shop
 
 models:
   jaffle_shop:
     staging:
-      +schema: staging
-      +materialized: view
+      +schema: silver
+      +materialized: table
     mart:
-      +schema: mart
+      +schema: gold
       +materialized: table
       # +docs:
         # node_color: 'silver'
