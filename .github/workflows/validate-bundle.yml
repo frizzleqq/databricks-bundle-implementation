@@ -1,0 +1,32 @@
+name: "Validate Databricks Bundle"
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+
+  ci-databricks:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12"]
+    env:
+      DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ secrets.DATABRICKS_CLIENT_ID }}
+      DATABRICKS_CLIENT_SECRET: ${{ secrets.DATABRICKS_CLIENT_SECRET }}
+      DATABRICKS_BUNDLE_ENV: dev
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: databricks/setup-cli@main
+      with:
+        version: 0.260.0
+    - name: Check Databricks CLI
+      run: databricks current-user me
+    - name: Validate Databricks Bundle
+      run: databricks bundle validate

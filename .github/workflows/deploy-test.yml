@@ -35,7 +35,7 @@ jobs:
         version: 0.260.0
     - name: Install the project
       run: uv sync --locked --extra dev
-    - name: Run Databricks CLI commands
+    - name: Check Databricks CLI
       run: databricks current-user me
     - name: Deploy Databricks Bundle
       run: databricks bundle deploy
