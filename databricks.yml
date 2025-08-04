@@ -20,7 +20,6 @@ sync:
   paths:
     - dbt/
     - dbx_example/
-    - notebooks/
     - resources/
     - typings/
     - databricks.yml
