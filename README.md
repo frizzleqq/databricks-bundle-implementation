@@ -7,9 +7,9 @@ The project ist configured using `pyproject.toml` (Python specifics) and `databr
 ## Repo Overview
 
 * `.github/workflows`: CI/CD jobs to test and dpeloy bundle
+* `dab_project`: Python project (Used in Databricks Workflow as Python-Wheel-Task)
 * `dbt`: [dbt](https://github.com/dbt-labs/dbt-core) project (Used in Databricks Workflow as dbt-Task)
   * dbt-Models used from https://github.com/dbt-labs/jaffle_shop_duckdb
-* `dbx_example`: Python project (Used in Databricks Workflow as Python-Wheel-Task)
 * `resources`: Resources such as Databricks Workflows or Databricks Volumes/Schemas
   * Python-based workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/python
   * YAML-based Workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#job
@@ -129,7 +129,7 @@ uv run ./scripts/setup_workspace.py
 
    Working in Databricks Git Repos automatically adds the root of the Git Repo to Python `sys.path`.
 
-   This way Notebooks in the Git Repo can run `import dbx_example` to import the local Python package during development without explicitly installing the package on the Cluster.
+   This way Notebooks in the Git Repo can run `import dab_project` to import the local Python package during development without explicitly installing the package on the Cluster.
 
    A Notebook outside the Git Repo can do `import os; os.chdir("/Workspace/Users/...")` to act like it is within the Git Repo.
 

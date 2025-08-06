@@ -1,7 +1,7 @@
 from pyspark.sql import functions as F
 
-from dbx_example.delta import DeltaWorker
-from dbx_example.tasks.base_task import Task
+from dab_project.delta import DeltaWorker
+from dab_project.tasks.base_task import Task
 
 
 class SilverTaxiAggTask(Task):
@@ -9,7 +9,7 @@ class SilverTaxiAggTask(Task):
     Aggregate `bronze_nyctaxi.trips` into a silver table `silver.nyctaxi_aggregate`.
     """
 
-    def _write_data(self, catalog_name: str) -> None:
+    def _perform_task(self, catalog_name: str) -> None:
         # Use Databricks sample data for demonstration
         bronze_table = DeltaWorker(
             catalog_name=catalog_name,

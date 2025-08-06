@@ -1,7 +1,7 @@
-# This is a Databricks asset bundle definition for dbx_example.
+# This is a Databricks asset bundle definition for dab_project.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
-  name: dbx_example
+  name: dab_project
   databricks_cli_version: ">=0.259.0"
 
 variables:
@@ -18,8 +18,8 @@ include:
 
 sync:
   paths:
+    - dab_project/
     - dbt/
-    - dbx_example/
     - resources/
     - typings/
     - databricks.yml
@@ -27,7 +27,7 @@ sync:
     - README.md
 
 artifacts:
-  dbx_example:
+  dab_project:
     type: whl
     build: uv build --wheel
     path: .

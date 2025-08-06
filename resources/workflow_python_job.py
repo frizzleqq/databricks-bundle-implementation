@@ -8,7 +8,7 @@ from databricks.bundles.jobs import (
     Task,
 )
 
-from dbx_example import tasks
+from dab_project import tasks
 from resources.constants import (
     DAILY_TRIGGER,
     DEFAULT_ENVIRONMENT,
@@ -18,7 +18,7 @@ from resources.constants import (
 )
 
 # Workflow Settings
-JOB_NAME = "dbx_python_job"
+JOB_NAME = "python_job"
 
 
 def create_generic_task(
@@ -50,7 +50,7 @@ def create_generic_task(
     return task
 
 
-py_dbx_example_job = Job(
+py_dab_project_job = Job(
     name=JOB_NAME,
     trigger=DAILY_TRIGGER,
     tasks=[
@@ -69,4 +69,4 @@ py_dbx_example_job = Job(
 
 
 if __name__ == "__main__":
-    print(json.dumps(py_dbx_example_job.as_dict(), indent=2))
+    print(json.dumps(py_dab_project_job.as_dict(), indent=2))

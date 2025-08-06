@@ -1,5 +1,5 @@
-from dbx_example.delta import DeltaWorker
-from dbx_example.tasks.base_task import Task
+from dab_project.delta import DeltaWorker
+from dab_project.tasks.base_task import Task
 
 
 class BronzeTaxiTask(Task):
@@ -7,7 +7,7 @@ class BronzeTaxiTask(Task):
     Ingest `samples.nyctaxi.trips` from the Databricks sample data into a bronze table.
     """
 
-    def _write_data(self, catalog_name: str) -> None:
+    def _perform_task(self, catalog_name: str) -> None:
         # Use Databricks sample data for demonstration
         df = self.spark.read.table("samples.nyctaxi.trips")
 

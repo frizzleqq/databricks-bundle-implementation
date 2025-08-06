@@ -1,4 +1,4 @@
-# The main job for dbx_example.
+# The main job for dab_project.
 resources:
   jobs:
     dbt_job:

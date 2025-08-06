@@ -6,7 +6,7 @@ from typing import Optional
 
 from pyspark.sql import SparkSession
 
-from dbx_example.spark import get_spark
+from dab_project.spark import get_spark
 
 
 class Task(ABC):
@@ -64,7 +64,7 @@ class Task(ABC):
         self._log_start()
         self.spark = get_spark()
         try:
-            self._write_data(catalog_name=catalog_name)
+            self._perform_task(catalog_name=catalog_name)
             self._log_exit(success=True)
         except Exception as e:
             self._log_exit(success=False, error=e)
@@ -80,7 +80,7 @@ class Task(ABC):
             self.logger.error(f"Failed ETL task: {self.name} - {str(error)}")
 
     @abstractmethod
-    def _write_data(self, catalog_name: str):
+    def _perform_task(self, catalog_name: str):
         """
         Process and write data.
 
