@@ -7,7 +7,7 @@ class BronzeAccuweatherTask(Task):
     Ingest `samples.accuweather.forecast_daily_calendar_metric` from the Databricks sample data into a bronze table.
     """
 
-    def _write_data(self, catalog_name: str) -> None:
+    def _perform_task(self, catalog_name: str) -> None:
         # Use Databricks sample data for demonstration
         df = self.spark.read.table("samples.accuweather.forecast_daily_calendar_metric")
 

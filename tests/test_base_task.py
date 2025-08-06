@@ -4,7 +4,7 @@ from dab_project.tasks.base_task import Task
 
 def generate_test_task(schema_name: str, table_name: str):
     class TestTask(Task):
-        def _write_data(self, catalog_name: str) -> None:
+        def _perform_task(self, catalog_name: str) -> None:
             df = self.spark.createDataFrame([(1, "test")], schema=["id", "name"])
 
             target_table = DeltaWorker(

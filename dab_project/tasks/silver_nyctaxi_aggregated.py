@@ -9,7 +9,7 @@ class SilverTaxiAggTask(Task):
     Aggregate `bronze_nyctaxi.trips` into a silver table `silver.nyctaxi_aggregate`.
     """
 
-    def _write_data(self, catalog_name: str) -> None:
+    def _perform_task(self, catalog_name: str) -> None:
         # Use Databricks sample data for demonstration
         bronze_table = DeltaWorker(
             catalog_name=catalog_name,
