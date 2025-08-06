@@ -50,8 +50,10 @@ workspace:
   state_path: ${workspace.root_path}/.state
 
 permissions:
-  - group_name: group_etl 
-    level: CAN_MANAGE
+  - level: CAN_MANAGE
+    group_name: group_etl 
+  - level: CAN_VIEW
+    group_name: group_reader
 
 targets:
   dev:

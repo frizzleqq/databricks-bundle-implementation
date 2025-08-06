@@ -1,50 +1,58 @@
 # Databricks Bundle Example
 
-This project is an example of a Databricks Asset bundle that deploys the following:
+This project is an example implementation of a [Databricks Asset Bundle](https://docs.databricks.com/aws/en/dev-tools/bundles/) using a [Databricks Free Edition](https://www.databricks.com/learn/free-edition) workspace.
 
-* Python Project as Wheel
-* Databricks Workflow examples
-   * Python-based workflow using Python Wheel tasks
-   * YAML-based Workflow using dbt tasks
+The project ist configured using `pyproject.toml` (Python specifics) and `databricks.yaml` (Databricks Bundle specifics) and uses [uv](https://docs.astral.sh/uv/) to manage the Python project and dependencies.
 
-Uses Databricks Free Edition: https://www.databricks.com/learn/free-edition
-* Using serverless environment version 3, which is similar to Databricks Runtime 16.3
-* For this example we created in the Workspace:
-   * `lake_dev`, `lake_test` and `lake_prod` catalog
-   * service principals (for assigning Workflow runners)
-      * Make sure the User used to deploy has `Service principal: User`
-   * `group_etl` group with `ALL PRIVILEGES` on the catalogs
-      * your user and the service principals should be members
+## Repo Overview
 
-## TODO:
+* `.github/workflows`: CI/CD jobs to test and dpeloy bundle
+* `dbt`: [dbt](https://github.com/dbt-labs/dbt-core) project (Used in Databricks Workflow as dbt-Task)
+  * dbt-Models used from https://github.com/dbt-labs/jaffle_shop_duckdb
+* `dbx_example`: Python project (Used in Databricks Workflow as Python-Wheel-Task)
+* `resources`: Resources such as Databricks Workflows or Databricks Volumes/Schemas
+  * Python-based workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/python
+  * YAML-based Workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#job
+* `scripts`: Python script to setup groups, service principals and catalogs used in a Databricks (Free Edition) workspace
+* `tests`: Unit-tests running on Databricks (via Connect) or locally
+  * Used in [ci.yml](.github/workflows/ci.yml) jobs
 
-* Script to create setup (catalogs, groups, volumes)
-* Resources (volume, schema, permissions)
-* Streaming example
-* Logging
-   * Logging to volume
+## Databricks Workspace
+
+For this example we use a Databricks Free Edition workspace https://www.databricks.com/learn/free-edition with all resources and identities managed in the Workspace (no external connections or Cloud Identity Management).
+
+### Setup
+
+Groups and Service Principals are not necessary, but are used in this project to showcase handling permissions on resources such as catalogs or workflows.
+
+* **Serverless environment version 3**, which matches [Databricks Runtime 16.3](https://docs.databricks.com/aws/en/release-notes/serverless/#version-163)
+* **Catalogs**: `lake_dev`, `lake_test` and `lake_prod`
+* **Service principals** (for CI/CD and Workflow runners)
+  * `sp_etl_dev` (for dev and test) and `sp_etl_prod` (for prod)
+  * Make sure the User used to deploy Workflows has `Service principal: User` on the used service principals
+* **Groups**
+  * `group_etl` group with `ALL PRIVILEGES` and `group_reader` with limited permissions on catalogs
+  * These are mostly to test applying grants using Asset Bundle resources
+
+A script exists set up the (Free) Workspace as described in [scripts/setup_workspace.py](scripts/setup_workspace.py), more on that in the Development section.
 
 ## Development
 
 ### Requirements
 
 * uv: https://docs.astral.sh/uv/getting-started/installation/
-   * `uv` will default to Python version specified in [.python-version](.python-version)
+  * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
-   * ">=0.259.0" for Python based workflows with `environment_version`
+  * ">=0.259.0" for Python based workflows with `environment_version`
 
 ### Setup environment
 
-Sync entire `uv` environment:
+Sync entire `uv` environment with dev dependencies:
 ```bash
 uv sync --extra dev
 ```
 
-Alternatively create virtual environment and install dependencies:
-```bash
-uv venv
-uv pip install --editable .[dev]
-```
+> **Note:** `dev` uses Databricks Connect, while `dev_local` uses local Spark
 
 #### (Optional) Activate virtual environment
 
@@ -58,12 +66,6 @@ Windows:
 .venv\Scripts\activate
 ```
 
-#### (Optional) Sync with local spark/delta instead of Databricks-connect
-
-```bash
-uv sync --extra dev_local
-```
-
 ### Unit-Tests
 
 ```bash
@@ -73,29 +75,52 @@ uv run pytest -v
 Based on whether Databricks Connect (the `dev` default) is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
 * On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
 
-> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well.
+> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
 
-## Databricks Connect
+### Checks
 
-See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databricks Connect in VS Code.
+```bash
+# Linting
+ruff check --fix
+# Formatting
+ruff format
+```
+
+### Databricks Connect
+
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
+
+### Setup Databricks Workspace
+
+The following script sets up a Databricks (Free Edition) Workspace for this project with additional catalogs, groups and service principals. It uses both Databricks-SDK and Databricks Connect (Serverless).
+
+```bash
+# Authenticate to your Databricks workspace, if you have not done so already:
+# databricks configure
+
+uv run ./scripts/setup_workspace.py
+```
 
 ## Databricks CLI
 
-1. Install the Databricks CLI from https://docs.databricks.com/dev-tools/cli/databricks-cli.html
-
-2. Authenticate to your Databricks workspace, if you have not done so already:
+1. Authenticate to your Databricks workspace, if you have not done so already:
     ```
     $ databricks configure
     ```
 
-3. To deploy a development copy of this project, type:
+2. To deploy a development copy of this project, type:
     ```
     $ databricks bundle deploy --target dev
     ```
 
-4. Similarly, to deploy a production copy, type:
+3. Similarly, to deploy a production copy, type:
    ```
    $ databricks bundle deploy --target prod
+   ```
+
+4. Deploy with custom variables
+   ```
+   $ databricks bundle deploy --target dev --var "catalog_name=workspace"
    ```
 
 ## FAQ
@@ -127,3 +152,10 @@ See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for enabling Databr
    * Schema bronze, silver, gold
    * document materialization `use_materialization_v2`
    * Primary, Foreign Key Constraints
+
+## TODO:
+
+* Resources (volume, schema, permissions)
+* Streaming example
+* Logging
+  * Logging to volume
