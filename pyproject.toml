@@ -65,15 +65,15 @@ include = [
     "pyproject.toml",
     "dbx_example/**/*.py",
     "resources/**/*.py",
+    "scripts/**/*.py",
     "tests/**/*.py",
-    "notebooks/**/*.py",
 ]
 
 [tool.ruff.format]
 docstring-code-format = true
 
 [tool.ruff.lint]
-exclude = ["notebooks/**/*.py"]
+exclude = ["scratch/**/*.py"]
 select = [
   "E", # pycodestyle
   "W", # pycodestyle

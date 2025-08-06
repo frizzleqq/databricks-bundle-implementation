@@ -12,7 +12,7 @@ resources:
 
       tasks:
     
-        - task_key: dbt_test
+        - task_key: dbt_build
           environment_key: dbt-default
           dbt_task:
             project_directory: ../dbt
