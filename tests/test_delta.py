@@ -1,6 +1,6 @@
 from pyspark.sql import types as T
 
-from dbx_example.delta import DeltaWorker
+from dab_project.delta import DeltaWorker
 
 # @pytest.fixture(scope="module", autouse=True)
 # def drop_schema_cascade(spark, catalog_name):

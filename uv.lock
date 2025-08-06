@@ -180,6 +180,60 @@ wheels = [
 ]
 
 [[package]]
+name = "dab-project"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "databricks-sdk" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "databricks-bundles" },
+    { name = "databricks-connect" },
+    { name = "dbt-databricks" },
+    { name = "mypy" },
+    { name = "pip" },
+    { name = "pydantic" },
+    { name = "pytest" },
+    { name = "ruff" },
+]
+dev-local = [
+    { name = "databricks-bundles" },
+    { name = "dbt-databricks" },
+    { name = "delta-spark" },
+    { name = "mypy" },
+    { name = "pip" },
+    { name = "pydantic" },
+    { name = "pyspark" },
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "databricks-bundles", marker = "extra == 'dev'", specifier = "~=0.260.0" },
+    { name = "databricks-bundles", marker = "extra == 'dev-local'", specifier = "~=0.260.0" },
+    { name = "databricks-connect", marker = "extra == 'dev'", specifier = "~=16.3.0" },
+    { name = "databricks-sdk", specifier = ">=0.41,<0.48.0" },
+    { name = "dbt-databricks", marker = "extra == 'dev'", specifier = "~=1.10.0" },
+    { name = "dbt-databricks", marker = "extra == 'dev-local'", specifier = "~=1.10.0" },
+    { name = "delta-spark", marker = "extra == 'dev-local'", specifier = ">=3.3.0,<4.0.0" },
+    { name = "mypy", marker = "extra == 'dev'" },
+    { name = "mypy", marker = "extra == 'dev-local'" },
+    { name = "pip", marker = "extra == 'dev'" },
+    { name = "pip", marker = "extra == 'dev-local'" },
+    { name = "pydantic", marker = "extra == 'dev'", specifier = "==2.8.2" },
+    { name = "pydantic", marker = "extra == 'dev-local'", specifier = "==2.8.2" },
+    { name = "pyspark", marker = "extra == 'dev-local'", specifier = ">=3.5.0,<4.0.0" },
+    { name = "pytest", marker = "extra == 'dev'" },
+    { name = "pytest", marker = "extra == 'dev-local'" },
+    { name = "ruff", marker = "extra == 'dev'" },
+    { name = "ruff", marker = "extra == 'dev-local'" },
+]
+provides-extras = ["dev", "dev-local"]
+
+[[package]]
 name = "daff"
 version = "1.4.2"
 source = { registry = "https://pypi.org/simple" }
@@ -418,60 +472,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/c3/90/96662d11392195f0e
 wheels = [
     { url = "https://files.pythonhosted.org/packages/53/21/45e28200c5310a8a522fc1995ddda1656357968d4d0e7b77e56fb221e6dd/dbt_spark-1.9.3-py3-none-any.whl", hash = "sha256:32d4d1acd5770ace71d42656768bc8ebada0787265cc435b0a9e1e88d8996de5", size = 50245, upload-time = "2025-07-16T19:35:32.031Z" },
 ]
-
-[[package]]
-name = "dbx-example"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "databricks-sdk" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "databricks-bundles" },
-    { name = "databricks-connect" },
-    { name = "dbt-databricks" },
-    { name = "mypy" },
-    { name = "pip" },
-    { name = "pydantic" },
-    { name = "pytest" },
-    { name = "ruff" },
-]
-dev-local = [
-    { name = "databricks-bundles" },
-    { name = "dbt-databricks" },
-    { name = "delta-spark" },
-    { name = "mypy" },
-    { name = "pip" },
-    { name = "pydantic" },
-    { name = "pyspark" },
-    { name = "pytest" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "databricks-bundles", marker = "extra == 'dev'", specifier = "~=0.260.0" },
-    { name = "databricks-bundles", marker = "extra == 'dev-local'", specifier = "~=0.260.0" },
-    { name = "databricks-connect", marker = "extra == 'dev'", specifier = "~=16.3.0" },
-    { name = "databricks-sdk", specifier = ">=0.41,<0.48.0" },
-    { name = "dbt-databricks", marker = "extra == 'dev'", specifier = "~=1.10.0" },
-    { name = "dbt-databricks", marker = "extra == 'dev-local'", specifier = "~=1.10.0" },
-    { name = "delta-spark", marker = "extra == 'dev-local'", specifier = ">=3.3.0,<4.0.0" },
-    { name = "mypy", marker = "extra == 'dev'" },
-    { name = "mypy", marker = "extra == 'dev-local'" },
-    { name = "pip", marker = "extra == 'dev'" },
-    { name = "pip", marker = "extra == 'dev-local'" },
-    { name = "pydantic", marker = "extra == 'dev'", specifier = "==2.8.2" },
-    { name = "pydantic", marker = "extra == 'dev-local'", specifier = "==2.8.2" },
-    { name = "pyspark", marker = "extra == 'dev-local'", specifier = ">=3.5.0,<4.0.0" },
-    { name = "pytest", marker = "extra == 'dev'" },
-    { name = "pytest", marker = "extra == 'dev-local'" },
-    { name = "ruff", marker = "extra == 'dev'" },
-    { name = "ruff", marker = "extra == 'dev-local'" },
-]
-provides-extras = ["dev", "dev-local"]
 
 [[package]]
 name = "deepdiff"

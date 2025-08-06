@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from pyspark.sql import DataFrame
 from pyspark.sql import types as T
 
-from dbx_example.spark import get_spark
+from dab_project.spark import get_spark
 
 
 @dataclass

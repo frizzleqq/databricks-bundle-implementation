@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-from dbx_example.tasks.base_task import Task
+from dab_project.tasks.base_task import Task
 
 
 def main():

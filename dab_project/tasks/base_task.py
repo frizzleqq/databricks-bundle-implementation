@@ -6,7 +6,7 @@ from typing import Optional
 
 from pyspark.sql import SparkSession
 
-from dbx_example.spark import get_spark
+from dab_project.spark import get_spark
 
 
 class Task(ABC):

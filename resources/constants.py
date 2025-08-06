@@ -8,8 +8,8 @@ from databricks.bundles.jobs import (
     TriggerSettings,
 )
 
-PACKAGE_NAME = "dbx_example"
-ENTRY_POINT = "dbx-example"
+PACKAGE_NAME = "dab_project"
+ENTRY_POINT = "dab-project"
 
 
 @variables

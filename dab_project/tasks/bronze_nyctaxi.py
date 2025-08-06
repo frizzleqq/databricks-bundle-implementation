@@ -1,5 +1,5 @@
-from dbx_example.delta import DeltaWorker
-from dbx_example.tasks.base_task import Task
+from dab_project.delta import DeltaWorker
+from dab_project.tasks.base_task import Task
 
 
 class BronzeTaxiTask(Task):
