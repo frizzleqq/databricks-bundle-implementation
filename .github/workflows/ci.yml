@@ -32,7 +32,7 @@ jobs:
         java-version: 17
         distribution: "zulu"
     - name: Install the project
-      run: uv sync --locked --extra dev_local
+      run: uv sync --locked --extra dev
     - name: Run code checks
       run: uv run ruff check
     - name: Check code formatting
@@ -65,6 +65,10 @@ jobs:
         version: 0.260.0
     - name: Install the project
       run: uv sync --locked --extra dev
+    - name: Install Databricks Connect
+      run: |
+        uv pip uninstall pyspark
+        uv pip install databricks-connect==16.3.5
     - name: Check Databricks CLI
       run: databricks current-user me
     - name: Run tests

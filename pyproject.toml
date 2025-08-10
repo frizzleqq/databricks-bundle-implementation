@@ -21,21 +21,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-    # Databricks Runtime (connect includes delta/pyspark)
-    "databricks-connect~=16.3.0",
-    "pydantic==2.8.2",
-    # dbt
-    "dbt-databricks~=1.10.0",
-    # Tooling
-    "databricks-bundles~=0.260.0", # For Python-based Workflows
-    "mypy", # Type hints
-    "pip", # Databricks extension needs it
-    "pytest", # Unit testing
-    "ruff", # Linting/Formatting
-]
-# Is this really needed?
-dev_local = [
-    # Databricks Runtime (connect includes delta/pyspark)
+    # Runtime
     "delta-spark>=3.3.0, <4.0.0",
     "pydantic==2.8.2",
     "pyspark>=3.5.0, <4.0.0",

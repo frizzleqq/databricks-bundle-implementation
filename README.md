@@ -50,19 +50,31 @@ Sync entire `uv` environment with dev dependencies:
 uv sync --extra dev
 ```
 
-> **Note:** `dev` uses Databricks Connect, while `dev_local` uses local Spark
+> **Note:** we install Databricks Connect in a follow-up step
 
 #### (Optional) Activate virtual environment
 
-bash:
+Bash:
 ```bash
 source .venv/bin/activate
 ```
 
-powershell:
+Windows:
 ```powershell
 .venv\Scripts\activate
 ```
+
+### Databricks Connect
+
+Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
+
+```bash
+uv pip uninstall pyspark
+uv pip install databricks-connect==16.3.5
+```
+> **Note:** For Databricks Runtime 16.3
+
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Unit-Tests
 
@@ -70,7 +82,7 @@ powershell:
 uv run pytest -v
 ```
 
-Based on whether Databricks Connect (the `dev` default) is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
 * On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
@@ -83,10 +95,6 @@ uv run ruff check --fix
 # Formatting
 uv run ruff format
 ```
-
-### Databricks Connect
-
-See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Setup Databricks Workspace
 
