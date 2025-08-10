@@ -21,18 +21,18 @@ def generate_test_task(schema_name: str, table_name: str):
     return Task.create_task_factory("TestTask")
 
 
-def test_etl_task_run(spark, catalog_name, request):
+def test_etl_task_run(spark, catalog_name, create_schema, table_name):
     task = generate_test_task(
-        schema_name=__name__,
-        table_name=f"table_{request.node.name}",
+        schema_name=create_schema,
+        table_name=table_name,
     )
     task.run(catalog_name)
 
     # Verify that the data was written to the Delta table
     delta_table = DeltaWorker(
         catalog_name=catalog_name,
-        schema_name=__name__,
-        table_name=f"table_{request.node.name}",
+        schema_name=create_schema,
+        table_name=table_name,
     )
 
     assert task.get_class_name() == "TestTask"

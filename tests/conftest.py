@@ -1,7 +1,8 @@
 import shutil
 import tempfile
+import uuid
 from pathlib import Path
-from typing import Generator, Optional
+from typing import Generator
 
 import pytest
 from delta import configure_spark_with_delta_pip
@@ -46,13 +47,32 @@ def spark() -> Generator[SparkSession, None, None]:
 
 
 @pytest.fixture(scope="session")
-def catalog_name() -> Generator[Optional[str], None, None]:
+def catalog_name() -> str:
     """Fixture to provide the catalog name for tests.
 
-    In Databricks, we use the "unit_tests" catalog.
+    In Databricks, we use the "lake_dev" catalog.
     Locally we run without a catalog, so we return None.
     """
     if DATABRICKS_CONNECT_AVAILABLE:
-        yield "unit_tests"
+        return "lake_dev"
     else:
-        yield None
+        return None
+
+
+@pytest.fixture(scope="module")
+def create_schema(spark, request) -> Generator[str, None, None]:
+    """Fixture to provide a schema for tests.
+
+    Creates a schema with a random name prefixed with the test module name and cleans it up after tests.
+    """
+    module_name = request.module.__name__.split(".")[-1]  # Get just the module name without path
+    random_schema_name = f"pytest_{module_name}_{uuid.uuid4().hex[:8]}"
+    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {random_schema_name}")
+    yield random_schema_name
+    spark.sql(f"DROP SCHEMA IF EXISTS {random_schema_name} CASCADE")
+
+
+@pytest.fixture(scope="function")
+def table_name(request) -> str:
+    """Fixture to provide a table name based on the test function name."""
+    return f"table_{request.node.name}"

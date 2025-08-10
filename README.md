@@ -83,7 +83,7 @@ uv run pytest -v
 ```
 
 Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
-* On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
+* On Databricks the unit-tests currently assume the catalog `lake_dev` exists.
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
 
