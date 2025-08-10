@@ -9,7 +9,7 @@ The project is configured using `pyproject.toml` (Python specifics) and `databri
 | Directory | Description |
 |-----------|-------------|
 | `.github/workflows` | CI/CD jobs to test and deploy bundle |
-| `dab_project` | Python project (Used in Databricks Workflow as Python-Wheel-Task) |
+| `src/dab_project` | Python project (Used in Databricks Workflow as Python-Wheel-Task) |
 | `dbt` | [dbt](https://github.com/dbt-labs/dbt-core) project<br/>* Used in Databricks Workflow as dbt-Task<br/>* dbt-Models used from https://github.com/dbt-labs/jaffle_shop_duckdb |
 | `resources` | Resources such as Databricks Workflows or Databricks Volumes/Schemas<br/>* Python-based workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/python<br/>* YAML-based Workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#job |
 | `scripts` | Python script to setup groups, service principals and catalogs used in a Databricks (Free Edition) workspace |
@@ -131,19 +131,6 @@ uv run ./scripts/setup_workspace.py
 
 ## FAQ
 
-* Why no `src` directory?
-
-   Working in Databricks Git Repos automatically adds the root of the Git Repo to Python `sys.path`.
-
-   This way Notebooks in the Git Repo can run `import dab_project` to import the local Python package during development without explicitly installing the package on the Cluster.
-
-   A Notebook outside the Git Repo can do `import os; os.chdir("/Workspace/Users/...")` to act like it is within the Git Repo.
-
-   Using a `src` directory requires changing the `sys.path` during development (without package installed) in a Databricks Git Repo.
-   ```python
-   import sys
-   sys.path.append("../src")
-   ```
 * Service Principals
 
    For this example, the targets `test` and `prod` use a group and service principals.
