@@ -1,14 +1,26 @@
-import sys
+# Databricks notebook source
+# MAGIC %pip install pytest
 
+# COMMAND ----------
+
+dbutils.library.restartPython()
+
+# COMMAND ----------
+
+import sys
 import pytest
 
-sys.dont_write_bytecode = True  # Prevent writing .pyc files
+# Prevent writing .pyc files
+sys.dont_write_bytecode = True
+# Add src to python path
+sys.path.append("../src")
+
+# COMMAND ----------
 
 pytest_result = pytest.main(
     [
         ".",
         "-v",
-        "-x",
     ]
 )
 

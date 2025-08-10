@@ -18,9 +18,9 @@ include:
 
 sync:
   paths:
-    - dab_project/
     - dbt/
     - resources/
+    - src/
     - typings/
     - databricks.yml
     - pyproject.toml

@@ -1,7 +1,11 @@
-# Notebooks
+# Scratch
 
-This folder contains Databricks Notebook style files (as `.py`).
+This folder is reserved for personal, exploratory notebooks.
+By default these are not committed to Git, as 'scratch' is listed in .gitignore.
 
-They access `dab_project` Python project, so it can be used as:
-* Databricks Git Repo
-* Local IDE (Project installed as 'editable')
+Using the `src` directory requires appending to the `sys.path`:
+
+```python
+import sys
+sys.path.append("../src")
+```

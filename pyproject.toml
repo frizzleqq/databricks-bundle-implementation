@@ -38,10 +38,6 @@ dev = [
 [project.scripts]
 dab-project = "dab_project.cli:main"
 
-[tool.uv.build-backend]
-module-name = "dab_project"
-module-root = ""
-
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 
@@ -49,17 +45,23 @@ ignore_missing_imports = true
 line-length = 100
 include = [
     "pyproject.toml",
-    "dab_project/**/*.py",
+    "src/**/*.py",
     "resources/**/*.py",
     "scripts/**/*.py",
     "tests/**/*.py",
+]
+exclude = [
+    "tests/notebook_run_pytest.py"
 ]
 
 [tool.ruff.format]
 docstring-code-format = true
 
 [tool.ruff.lint]
-exclude = ["scratch/**/*.py"]
+exclude = [
+    "scratch/**/*.py",
+    "tests/notebook_run_pytest.py"
+]
 select = [
   "E", # pycodestyle
   "W", # pycodestyle
@@ -82,6 +84,7 @@ line-length = 100
 target-version = ['py312']
 
 [tool.pytest.ini_options]
+pythonpath = "src"
 addopts = "-ra -q"
 testpaths = [
     "tests",
