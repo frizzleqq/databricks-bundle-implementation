@@ -67,7 +67,7 @@ Windows:
 ### Databricks Connect
 
 Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
-
+a
 ```bash
 uv pip uninstall pyspark
 uv pip install databricks-connect==16.3.5
