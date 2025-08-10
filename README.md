@@ -2,20 +2,18 @@
 
 This project is an example implementation of a [Databricks Asset Bundle](https://docs.databricks.com/aws/en/dev-tools/bundles/) using a [Databricks Free Edition](https://www.databricks.com/learn/free-edition) workspace.
 
-The project ist configured using `pyproject.toml` (Python specifics) and `databricks.yaml` (Databricks Bundle specifics) and uses [uv](https://docs.astral.sh/uv/) to manage the Python project and dependencies.
+The project is configured using `pyproject.toml` (Python specifics) and `databricks.yaml` (Databricks Bundle specifics) and uses [uv](https://docs.astral.sh/uv/) to manage the Python project and dependencies.
 
-## Repo Overview
+## Repository Structure
 
-* `.github/workflows`: CI/CD jobs to test and dpeloy bundle
-* `dab_project`: Python project (Used in Databricks Workflow as Python-Wheel-Task)
-* `dbt`: [dbt](https://github.com/dbt-labs/dbt-core) project (Used in Databricks Workflow as dbt-Task)
-  * dbt-Models used from https://github.com/dbt-labs/jaffle_shop_duckdb
-* `resources`: Resources such as Databricks Workflows or Databricks Volumes/Schemas
-  * Python-based workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/python
-  * YAML-based Workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#job
-* `scripts`: Python script to setup groups, service principals and catalogs used in a Databricks (Free Edition) workspace
-* `tests`: Unit-tests running on Databricks (via Connect) or locally
-  * Used in [ci.yml](.github/workflows/ci.yml) jobs
+| Directory | Description |
+|-----------|-------------|
+| `.github/workflows` | CI/CD jobs to test and deploy bundle |
+| `dab_project` | Python project (Used in Databricks Workflow as Python-Wheel-Task) |
+| `dbt` | [dbt](https://github.com/dbt-labs/dbt-core) project<br/>* Used in Databricks Workflow as dbt-Task<br/>* dbt-Models used from https://github.com/dbt-labs/jaffle_shop_duckdb |
+| `resources` | Resources such as Databricks Workflows or Databricks Volumes/Schemas<br/>* Python-based workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/python<br/>* YAML-based Workflow: https://docs.databricks.com/aws/en/dev-tools/bundles/resources#job |
+| `scripts` | Python script to setup groups, service principals and catalogs used in a Databricks (Free Edition) workspace |
+| `tests` | Unit-tests running on Databricks (via Connect) or locally<br/>* Used in [ci.yml](.github/workflows/ci.yml) jobs |
 
 ## Databricks Workspace
 
@@ -52,7 +50,7 @@ Sync entire `uv` environment with dev dependencies:
 uv sync --extra dev
 ```
 
-> **Note:** `dev` uses Databricks Connect, while `dev_local` uses local Spark
+> **Note:** we install Databricks Connect in a follow-up step
 
 #### (Optional) Activate virtual environment
 
@@ -66,14 +64,26 @@ Windows:
 .venv\Scripts\activate
 ```
 
+### Databricks Connect
+
+Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
+
+```bash
+uv pip uninstall pyspark
+uv pip install databricks-connect==16.3.5
+```
+> **Note:** For Databricks Runtime 16.3
+
+See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
+
 ### Unit-Tests
 
 ```bash
 uv run pytest -v
 ```
 
-Based on whether Databricks Connect (the `dev` default) is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
-* On Databricks the unit-tests currently assume the catalog `unit_tests` exists (not ideal).
+Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+* On Databricks the unit-tests currently assume the catalog `lake_dev` exists.
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
 
@@ -81,14 +91,10 @@ Based on whether Databricks Connect (the `dev` default) is enabled or not the Un
 
 ```bash
 # Linting
-ruff check --fix
+uv run ruff check --fix
 # Formatting
-ruff format
+uv run ruff format
 ```
-
-### Databricks Connect
-
-See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Setup Databricks Workspace
 
@@ -150,7 +156,7 @@ uv run ./scripts/setup_workspace.py
    The `dbt` project is based on https://github.com/dbt-labs/jaffle_shop_duckdb with following changes:
 
    * Schema bronze, silver, gold
-   * document materialization `use_materialization_v2`
+   * documented materialization `use_materialization_v2`
    * Primary, Foreign Key Constraints
 
 ## TODO:

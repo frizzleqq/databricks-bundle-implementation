@@ -13,7 +13,7 @@ from dab_project.delta import DeltaWorker
 #         spark.sql(f"DROP SCHEMA IF EXISTS {schema_name} CASCADE")
 
 
-def test_deltawriter_create_table_if_not_exists(spark, catalog_name, request):
+def test_deltawriter_create_table_if_not_exists(spark, catalog_name, create_schema, table_name):
     schema = T.StructType(
         [
             T.StructField("key", T.IntegerType()),
@@ -22,8 +22,8 @@ def test_deltawriter_create_table_if_not_exists(spark, catalog_name, request):
     )
     delta_writer = DeltaWorker(
         catalog_name=catalog_name,
-        schema_name=__name__,
-        table_name=f"table_{request.node.name}",
+        schema_name=create_schema,
+        table_name=table_name,
     )
 
     delta_writer.drop_table_if_exists()

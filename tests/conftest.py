@@ -1,5 +1,6 @@
 import shutil
 import tempfile
+import uuid
 from pathlib import Path
 from typing import Generator, Optional
 
@@ -23,7 +24,7 @@ def spark() -> Generator[SparkSession, None, None]:
         yield spark
     else:
         # If databricks-connect is not installed, we use use local Spark session
-        warehouse_dir = tempfile.TemporaryDirectory().name
+        warehouse_dir = tempfile.mkdtemp()
         _builder = (
             SparkSession.builder.master("local[*]")
             .config("spark.hive.metastore.warehouse.dir", Path(warehouse_dir).as_uri())
@@ -46,13 +47,38 @@ def spark() -> Generator[SparkSession, None, None]:
 
 
 @pytest.fixture(scope="session")
-def catalog_name() -> Generator[Optional[str], None, None]:
+def catalog_name() -> Optional[str]:
     """Fixture to provide the catalog name for tests.
 
-    In Databricks, we use the "unit_tests" catalog.
+    In Databricks, we use the "lake_dev" catalog.
     Locally we run without a catalog, so we return None.
     """
     if DATABRICKS_CONNECT_AVAILABLE:
-        yield "unit_tests"
+        return "lake_dev"
     else:
-        yield None
+        return None
+
+
+@pytest.fixture(scope="module")
+def create_schema(spark, catalog_name, request) -> Generator[str, None, None]:
+    """Fixture to provide a schema for tests.
+
+    Creates a schema with a random name prefixed with the test module name and cleans it up after tests.
+    """
+    module_name = request.module.__name__.split(".")[-1]  # Get just the module name without path
+    schema_name = f"pytest_{module_name}_{uuid.uuid4().hex[:8]}"
+
+    if catalog_name is not None:
+        full_schema_name = f"{catalog_name}.{schema_name}"
+    else:
+        full_schema_name = schema_name
+
+    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {full_schema_name}")
+    yield schema_name
+    spark.sql(f"DROP SCHEMA IF EXISTS {full_schema_name} CASCADE")
+
+
+@pytest.fixture(scope="function")
+def table_name(request) -> str:
+    """Fixture to provide a table name based on the test function name."""
+    return request.node.name
