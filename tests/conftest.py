@@ -60,19 +60,21 @@ def catalog_name() -> str:
 
 
 @pytest.fixture(scope="module")
-def create_schema(spark, request) -> Generator[str, None, None]:
+def create_schema(spark, catalog_name, request) -> Generator[str, None, None]:
     """Fixture to provide a schema for tests.
 
     Creates a schema with a random name prefixed with the test module name and cleans it up after tests.
     """
     module_name = request.module.__name__.split(".")[-1]  # Get just the module name without path
-    random_schema_name = f"pytest_{module_name}_{uuid.uuid4().hex[:8]}"
-    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {random_schema_name}")
-    yield random_schema_name
-    spark.sql(f"DROP SCHEMA IF EXISTS {random_schema_name} CASCADE")
+    schema_name = f"pytest_{module_name}_{uuid.uuid4().hex[:8]}"
+    if catalog_name is not None:
+        full_schema_name = f"{catalog_name}.{schema_name}"
+    spark.sql(f"CREATE SCHEMA IF NOT EXISTS {full_schema_name}")
+    yield schema_name
+    spark.sql(f"DROP SCHEMA {full_schema_name} CASCADE")
 
 
 @pytest.fixture(scope="function")
 def table_name(request) -> str:
     """Fixture to provide a table name based on the test function name."""
-    return f"table_{request.node.name}"
+    return request.node.name
