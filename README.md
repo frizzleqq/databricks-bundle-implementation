@@ -79,9 +79,9 @@ Based on whether Databricks Connect (the `dev` default) is enabled or not the Un
 
 ```bash
 # Linting
-ruff check --fix
+uv run ruff check --fix
 # Formatting
-ruff format
+uv run ruff format
 ```
 
 ### Databricks Connect
