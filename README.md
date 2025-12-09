@@ -23,7 +23,7 @@ For this example we use a Databricks Free Edition workspace https://www.databric
 
 Groups and Service Principals are not necessary, but are used in this project to showcase handling permissions on resources such as catalogs or workflows.
 
-* **Serverless environment version 3**, which matches [Databricks Runtime 16.3](https://docs.databricks.com/aws/en/release-notes/serverless/#version-163)
+* **Serverless environment**: [Version 4](https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/four) which is similar to Databricks Runtime ~17.*
 * **Catalogs**: `lake_dev`, `lake_test` and `lake_prod`
 * **Service principals** (for CI/CD and Workflow runners)
   * `sp_etl_dev` (for dev and test) and `sp_etl_prod` (for prod)
@@ -47,7 +47,7 @@ A script exists set up the (Free) Workspace as described in [scripts/setup_works
 
 Sync entire `uv` environment with dev dependencies:
 ```bash
-uv sync --extra dev
+uv sync --all-extras
 ```
 
 > **Note:** we install Databricks Connect in a follow-up step
