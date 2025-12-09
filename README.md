@@ -66,13 +66,20 @@ Windows:
 
 ### Databricks Connect
 
-Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
+Two options to use `databricks-connect` (requires authentication via Databricks CLI):
 
+**Option 1: Install in environment**
 ```bash
 uv pip uninstall pyspark
-uv pip install databricks-connect==16.3.5
+uv pip install databricks-connect==17.2.*
 ```
-> **Note:** For Databricks Runtime 16.3
+
+**Option 2: Run with temporary dependency**
+```bash
+uv run --with databricks-connect==17.2.* pytest
+```
+
+> **Note:** For Databricks Runtime 17. Option 2 is useful for one-off commands without modifying your  `uv` environment.
 
 See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
