@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.8.0,<0.9"]
+requires = ["uv_build>=0.8.0,<0.10"]
 build-backend = "uv_build"
 
 [project]
@@ -21,16 +21,16 @@ dependencies = [
 
 [project.optional-dependencies]
 runtime = [
-    "delta-spark~=4.0.0",
+    "delta-spark==4.0.*",
     "pydantic==2.10.6",
-    "pyspark~=4.0.0",
+    "pyspark==4.0.*",
 ]
 dbt = [
-    "dbt-databricks~=1.11.0",
+    "dbt-databricks==1.11.*",
 ]
 dev = [
     # Tooling
-    "databricks-bundles~=0.279.0", # For Python-based Workflows
+    "databricks-bundles==0.279.*", # For Python-based Workflows
     "mypy", # Type hints
     "pip", # Databricks extension needs it
     "pytest", # Unit testing

@@ -45,7 +45,7 @@ A script exists set up the (Free) Workspace as described in [scripts/setup_works
 
 ### Setup environment
 
-Sync entire `uv` environment with dev dependencies:
+Sync entire `uv` environment with all optional dependency groups:
 ```bash
 uv sync --all-extras
 ```

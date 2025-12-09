@@ -1,8 +1,8 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#   "databricks-sdk==0.61.0",
-#   "databricks-connect~=16.3.0",
+#   "databricks-sdk>=0.41, <0.68.0",
+#   "databricks-connect==17.2.*",
 # ]
 # ///
 """Sets up the Databricks Workspace with necessary catalogs, groups and service principals.
