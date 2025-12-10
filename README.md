@@ -23,7 +23,7 @@ For this example we use a Databricks Free Edition workspace https://www.databric
 
 Groups and Service Principals are not necessary, but are used in this project to showcase handling permissions on resources such as catalogs or workflows.
 
-* **Serverless environment version 3**, which matches [Databricks Runtime 16.3](https://docs.databricks.com/aws/en/release-notes/serverless/#version-163)
+* **Serverless environment**: [Version 4](https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/four) which is similar to Databricks Runtime ~17.*
 * **Catalogs**: `lake_dev`, `lake_test` and `lake_prod`
 * **Service principals** (for CI/CD and Workflow runners)
   * `sp_etl_dev` (for dev and test) and `sp_etl_prod` (for prod)
@@ -45,9 +45,9 @@ A script exists set up the (Free) Workspace as described in [scripts/setup_works
 
 ### Setup environment
 
-Sync entire `uv` environment with dev dependencies:
+Sync entire `uv` environment with all optional dependency groups:
 ```bash
-uv sync --extra dev
+uv sync --all-extras
 ```
 
 > **Note:** we install Databricks Connect in a follow-up step
@@ -70,16 +70,24 @@ Install `databricks-connect` in active environment. This requires authentication
 
 ```bash
 uv pip uninstall pyspark
-uv pip install databricks-connect==16.3.5
+uv pip install databricks-connect==17.2.*
 ```
-> **Note:** For Databricks Runtime 16.3
+
+**Option 2: Run with temporary dependency**
+```bash
+uv run --with databricks-connect==17.2.* pytest
+```
+
+> **Note:** For Databricks Runtime Serverless v4
+
 
 See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Unit-Tests
 
 ```bash
-uv run pytest -v
+# in case databricks-connect is installed, --no-sync prevents reinstalling pyspark
+uv run --no-sync pytest -v
 ```
 
 Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
