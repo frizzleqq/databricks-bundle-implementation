@@ -66,9 +66,8 @@ Windows:
 
 ### Databricks Connect
 
-Two options to use `databricks-connect` (requires authentication via Databricks CLI):
+Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
 
-**Option 1: Install in environment**
 ```bash
 uv pip uninstall pyspark
 uv pip install databricks-connect==17.2.*
@@ -79,14 +78,16 @@ uv pip install databricks-connect==17.2.*
 uv run --with databricks-connect==17.2.* pytest
 ```
 
-> **Note:** For Databricks Runtime 17. Option 2 is useful for one-off commands without modifying your  `uv` environment.
+> **Note:** For Databricks Runtime Serverless v4
+
 
 See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Unit-Tests
 
 ```bash
-uv run pytest -v
+# in case databricks-connect is installed, --no-sync prevents reinstalling pyspark
+uv run --no-sync pytest -v
 ```
 
 Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.

@@ -65,7 +65,11 @@ jobs:
         version: 0.279.0
     - name: Install the project
       run: uv sync --locked --all-extras
+    - name: Install Databricks Connect
+      run: |
+        uv pip uninstall pyspark
+        uv pip install databricks-connect==17.2.*
     - name: Check Databricks CLI
       run: databricks current-user me
-    - name: Run tests using databricks connect
-      run: uv run --with databricks-connect==17.2.* pytest -v
+    - name: Run tests
+      run: uv run --no-sync pytest -v
