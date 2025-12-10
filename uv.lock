@@ -237,6 +237,11 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+databricks = [
+    { name = "delta-spark" },
+    { name = "pydantic" },
+    { name = "pyspark" },
+]
 dbt = [
     { name = "dbt-databricks" },
 ]
@@ -247,26 +252,21 @@ dev = [
     { name = "pytest" },
     { name = "ruff" },
 ]
-runtime = [
-    { name = "delta-spark" },
-    { name = "pydantic" },
-    { name = "pyspark" },
-]
 
 [package.metadata]
 requires-dist = [
     { name = "databricks-bundles", marker = "extra == 'dev'", specifier = "==0.279.*" },
     { name = "databricks-sdk", specifier = ">=0.41,<0.68.0" },
     { name = "dbt-databricks", marker = "extra == 'dbt'", specifier = "==1.11.*" },
-    { name = "delta-spark", marker = "extra == 'runtime'", specifier = "==4.0.*" },
+    { name = "delta-spark", marker = "extra == 'databricks'", specifier = "==4.0.*" },
     { name = "mypy", marker = "extra == 'dev'" },
     { name = "pip", marker = "extra == 'dev'" },
-    { name = "pydantic", marker = "extra == 'runtime'", specifier = "==2.10.6" },
-    { name = "pyspark", marker = "extra == 'runtime'", specifier = "==4.0.*" },
+    { name = "pydantic", marker = "extra == 'databricks'", specifier = "==2.10.6" },
+    { name = "pyspark", marker = "extra == 'databricks'", specifier = "==4.0.*" },
     { name = "pytest", marker = "extra == 'dev'" },
     { name = "ruff", marker = "extra == 'dev'" },
 ]
-provides-extras = ["runtime", "dbt", "dev"]
+provides-extras = ["databricks", "dbt", "dev"]
 
 [[package]]
 name = "daff"
