@@ -1,6 +1,9 @@
 name: "Release Bundle to Prod"
 
-on: workflow_dispatch
+on:
+  release:
+    types: [published]
+  workflow_dispatch:  # Keep manual trigger as fallback
 
 permissions:
   contents: read
