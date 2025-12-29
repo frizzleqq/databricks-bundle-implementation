@@ -156,7 +156,6 @@ uv run ./scripts/setup_workspace.py
 
 ## TODO:
 
-* Resources (volume, schema, permissions)
 * Streaming example
 * Logging
   * Logging to volume
