@@ -6,14 +6,14 @@ bundle:
 
 variables:
   catalog_name:
-    description: The name of the catalog to use for this bundle.
+    description: The name of the catalog to use for this bundle (set in targets).
   service_principal_id:
-    description: The service principal ID to use for running jobs.
+    description: The service principal ID to use for running jobs (auto-lookup).
   serverless_environment_version:
     description: The serverless environment to use for this bundle.
     default: "4"
   dbt_sql_warehouse_id:
-    description: The ID of the SQL warehouse to use for dbt tasks.
+    description: The ID of the SQL warehouse to use for dbt tasks (auto-lookup).
     # Lookup the warehouse ID by name.
     lookup:
       warehouse: "Serverless Starter Warehouse"
