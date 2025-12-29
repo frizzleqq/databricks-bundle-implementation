@@ -1,32 +1,33 @@
-resources:
-  volumes:
-    # These volumes are unused and exist only as proof of concept
-    silver_checkpoints_volume:
-      name: checkpoints
-      catalog_name: ${var.catalog_name}
-      schema_name: silver
-      comment: "Silver volume for Spark Streaming checkpoints"
-      lifecycle:
-        prevent_destroy: true
-      grants:
-        - principal: group_etl
-          privileges:
-            - ALL_PRIVILEGES
-        - principal: group_reader
-          privileges:
-            - READ_VOLUME
+# These volumes are unused and exist only as proof of concept
 
-    gold_checkpoints_volume:
-      name: checkpoints
-      catalog_name: ${var.catalog_name}
-      schema_name: gold
-      comment: "Gold volume for Spark Streaming checkpoints"
-      lifecycle:
-        prevent_destroy: true
-      grants:
-        - principal: group_etl
-          privileges:
-            - ALL_PRIVILEGES
-        - principal: group_reader
-          privileges:
-            - READ_VOLUME
+# resources:
+#   volumes:
+#     silver_checkpoints_volume:
+#       name: checkpoints
+#       catalog_name: ${var.catalog_name}
+#       schema_name: silver
+#       comment: "Silver volume for Spark Streaming checkpoints"
+#       lifecycle:
+#         prevent_destroy: true
+#       grants:
+#         - principal: group_etl
+#           privileges:
+#             - ALL_PRIVILEGES
+#         - principal: group_reader
+#           privileges:
+#             - READ_VOLUME
+
+#     gold_checkpoints_volume:
+#       name: checkpoints
+#       catalog_name: ${var.catalog_name}
+#       schema_name: gold
+#       comment: "Gold volume for Spark Streaming checkpoints"
+#       lifecycle:
+#         prevent_destroy: true
+#       grants:
+#         - principal: group_etl
+#           privileges:
+#             - ALL_PRIVILEGES
+#         - principal: group_reader
+#           privileges:
+#             - READ_VOLUME
