@@ -1,33 +1,34 @@
-resources:
-  schemas:
-    # The pipeline would create schemas automatically, so this is more of a proof of concept
-    silver_schema:
-      name: silver
-      catalog_name: ${var.catalog_name}
-      comment: "Silver schema for cleaned and processed data"
-      lifecycle:
-        prevent_destroy: true
-      grants:
-        - principal: group_etl
-          privileges:
-            - ALL_PRIVILEGES
-        - principal: group_reader
-          privileges:
-            - USE_SCHEMA
-            - SELECT
+# The pipeline would create schemas automatically, so this is more of a proof of concept
+
+# resources:
+#   schemas:
+#     silver_schema:
+#       name: silver
+#       catalog_name: ${var.catalog_name}
+#       comment: "Silver schema for cleaned and processed data"
+#       lifecycle:
+#         prevent_destroy: true
+#       grants:
+#         - principal: group_etl
+#           privileges:
+#             - ALL_PRIVILEGES
+#         - principal: group_reader
+#           privileges:
+#             - USE_SCHEMA
+#             - SELECT
     
-    gold_schema:
-      name: gold
-      catalog_name: ${var.catalog_name}
-      comment: "Gold schema for aggregated and business-ready data"
-      lifecycle:
-        prevent_destroy: true
-      grants:
-        - principal: group_etl
-          privileges:
-            - ALL_PRIVILEGES
-        - principal: group_reader
-          privileges:
-            - USE_SCHEMA
-            - SELECT
+#     gold_schema:
+#       name: gold
+#       catalog_name: ${var.catalog_name}
+#       comment: "Gold schema for aggregated and business-ready data"
+#       lifecycle:
+#         prevent_destroy: true
+#       grants:
+#         - principal: group_etl
+#           privileges:
+#             - ALL_PRIVILEGES
+#         - principal: group_reader
+#           privileges:
+#             - USE_SCHEMA
+#             - SELECT
     
