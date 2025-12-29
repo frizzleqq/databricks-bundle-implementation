@@ -32,7 +32,7 @@ dbt = [
 ]
 # Development & Testing
 dev = [
-    "databricks-bundles==0.279.*", # For Python-based Workflows
+    "databricks-bundles==0.280.*", # For Python-based Workflows
     "mypy", # Type hints
     "pip", # Databricks extension needs it
     "pytest", # Unit testing

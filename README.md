@@ -41,7 +41,7 @@ A script exists set up the (Free) Workspace as described in [scripts/setup_works
 * uv: https://docs.astral.sh/uv/getting-started/installation/
   * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
-  * ">=0.259.0" for Python based workflows with `environment_version`
+  * ">=0.269.0" due to 'lifecycle prevent_destroy'
 
 ### Setup environment
 
@@ -156,7 +156,6 @@ uv run ./scripts/setup_workspace.py
 
 ## TODO:
 
-* Resources (volume, schema, permissions)
 * Streaming example
 * Logging
   * Logging to volume
