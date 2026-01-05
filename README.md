@@ -2,6 +2,8 @@
 
 This project is an example implementation of a [Databricks Asset Bundle](https://docs.databricks.com/aws/en/dev-tools/bundles/) using a [Databricks Free Edition](https://www.databricks.com/learn/free-edition) workspace.
 
+Included is a Python (PySpark/Delta) project, a dbt project and Databricks Workflows using these resources. Additionally CI/CD workflows (github) are included to test and deploy the Asset Bundle to different targets.
+
 The project is configured using `pyproject.toml` (Python specifics) and `databricks.yaml` (Databricks Bundle specifics) and uses [uv](https://docs.astral.sh/uv/) to manage the Python project and dependencies.
 
 ## Repository Structure
@@ -21,18 +23,20 @@ For this example we use a Databricks Free Edition workspace https://www.databric
 
 ### Setup
 
-Groups and Service Principals are not necessary, but are used in this project to showcase handling permissions on resources such as catalogs or workflows.
+This Databricks Asset Bundle expects pre-existing Catalogs, Groups and Service Principals to showcase providing permissions on resources such as catalogs or workflows.
+
+A script exists to set up the Workspace (Free Edition) as described in the [Setup Databricks Workspace](#setup-databricks-workspace) section.
 
 * **Serverless environment**: [Version 4](https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/four) which is similar to Databricks Runtime ~17.*
 * **Catalogs**: `lake_dev`, `lake_test` and `lake_prod`
 * **Service principals** (for CI/CD and Workflow runners)
   * `sp_etl_dev` (for dev and test) and `sp_etl_prod` (for prod)
   * Make sure the User used to deploy Workflows has `Service principal: User` on the used service principals
+  * For CI/CD workflows we generated the Databricks secrets `DATABRICKS_CLIENT_ID` and `DATABRICKS_CLIENT_SECRET`
 * **Groups**
   * `group_etl` group with `ALL PRIVILEGES` and `group_reader` with limited permissions on catalogs
   * These are mostly to test applying grants using Asset Bundle resources
 
-A script exists set up the (Free) Workspace as described in [scripts/setup_workspace.py](scripts/setup_workspace.py), more on that in the Development section.
 
 ## Development
 
@@ -41,7 +45,7 @@ A script exists set up the (Free) Workspace as described in [scripts/setup_works
 * uv: https://docs.astral.sh/uv/getting-started/installation/
   * `uv` will default to Python version specified in [.python-version](.python-version)
 * Databricks CLI: https://docs.databricks.com/aws/en/dev-tools/cli/install
-  * ">=0.269.0" due to 'lifecycle prevent_destroy'
+  * ">=0.270.0" due to 'databricks bundle plan' command
 
 ### Setup environment
 
@@ -90,7 +94,7 @@ See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databrick
 uv run --no-sync pytest -v
 ```
 
-Based on whether Databricks Connect is enabled or not the Unit-Tests try to use a Databricks Cluster or start a local Spark session with Delta support.
+Based on whether Databricks Connect is enabled or not the Unit-Tests use a Databricks Cluster or start a local Spark session with Delta support.
 * On Databricks the unit-tests currently assume the catalog `lake_dev` exists.
 
 > **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
