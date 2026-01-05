@@ -39,8 +39,8 @@ jobs:
     - name: Check Databricks CLI
       run: databricks current-user me
     - name: Log Bundle Changes
-      run: databricks bundle plan --target prod --output json
+      run: databricks bundle plan --output json
       working-directory: .
     - name: Deploy Databricks Bundle
-      run: databricks bundle deploy --target prod
+      run: databricks bundle deploy
       working-directory: .
