@@ -72,6 +72,7 @@ class Task(ABC):
 
     def _log_start(self) -> None:
         self.logger.info(f"Starting ETL task: {self.name}")
+        self.logger.debug(f"Task class: {self.__class__.__module__}.{self.__class__.__name__}")
 
     def _log_exit(self, success: bool, error: Optional[Exception] = None) -> None:
         if success:
