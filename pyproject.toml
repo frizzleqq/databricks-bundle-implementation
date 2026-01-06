@@ -54,11 +54,11 @@ include = [
     "scripts/**/*.py",
     "tests/**/*.py",
 ]
+
+[tool.ruff.format]
 exclude = [
     "tests/notebook_run_pytest.py"
 ]
-
-[tool.ruff.format]
 docstring-code-format = true
 
 [tool.ruff.lint]
