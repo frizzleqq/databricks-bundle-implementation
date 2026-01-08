@@ -19,19 +19,31 @@ dependencies = [
     "databricks-sdk>=0.41, <0.68.0", # pinning from dbt-databricks
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
+# Development with databricks-connect
+dev = [
+    { include-group = "databricks" },
+    { include-group = "dbt" },
+    { include-group = "tooling" },
+    "databricks-connect>=17.0,<17.4",
+]
+# Development with local Spark
+dev-spark = [
+    { include-group = "databricks" },
+    { include-group = "tooling" },
+    "delta-spark==4.0.*",
+    "pyspark==4.0.*",
+]
 # Databricks runtime dependencies (preinstalled on cluster)
 databricks = [
-    "delta-spark==4.0.*",
     "pydantic==2.10.6",
-    "pyspark==4.0.*",
 ]
 # dbt dependencies
 dbt = [
     "dbt-databricks==1.11.*",
 ]
-# Development & Testing
-dev = [
+# Development tooling (shared across dev environments)
+tooling = [
     "databricks-bundles==0.280.*", # For Python-based Workflows
     "mypy", # Type hints
     "pip", # Databricks extension needs it
