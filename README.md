@@ -51,10 +51,10 @@ A script exists to set up the Workspace (Free Edition) as described in the [Setu
 
 Sync `uv` environment with `dev` (includes databricks-connect) dependencies:
 ```bash
-uv sync --locked --group dev
+uv sync --locked
 ```
 
-> **Note:** For local Spark use the `dev-spark` dependency group instead.
+> **Note:** For local Spark use `uv sync --group dev-spark --no-dev` instead.
 
 #### (Optional) Activate virtual environment
 

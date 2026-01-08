@@ -10,11 +10,8 @@ This repo uses Databricks CLI to deploy a Databricks Asset Bundle.
 - `tests`: Unit tests for the Python project
 
  ## Setup commands
-- Install deps: `uv sync --locked --group dev-spark`
+- Install deps: `uv sync --locked --group dev-spark --no-dev`
 - Run code checks: `uv run ruff check`
 - Check code formatting: `uv run ruff format --check`
 - Run tests: `uv run pytest -v`
  
-## Unit-Tests
-- On Linux systems, run: `uv sync --group dev-spark`
-- On Windows systems, run: `uv sync --group dev`
