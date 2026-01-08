@@ -11,7 +11,7 @@ This repo uses Databricks CLI to deploy a Databricks Asset Bundle.
 
  ## Setup commands
 - Install deps: `uv sync --locked --group dev-spark --no-dev`
-- Run code checks: `uv run ruff check`
-- Check code formatting: `uv run ruff format --check`
-- Run tests: `uv run pytest -v`
+- Run code checks: `uv run --no-dev ruff check`
+- Check code formatting: `uv run --no-dev ruff format --check`
+- Run tests: `uv run --no-dev pytest -v`
  
