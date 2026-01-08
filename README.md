@@ -49,12 +49,12 @@ A script exists to set up the Workspace (Free Edition) as described in the [Setu
 
 ### Setup environment
 
-Sync entire `uv` environment with all optional dependency groups:
+Sync `uv` environment with `dev` (includes databricks-connect) dependencies:
 ```bash
-uv sync --all-extras
+uv sync --locked --group dev
 ```
 
-> **Note:** we install Databricks Connect in a follow-up step
+> **Note:** For local Spark use the `dev-spark` dependency group instead.
 
 #### (Optional) Activate virtual environment
 
@@ -70,34 +70,18 @@ Windows:
 
 ### Databricks Connect
 
-Install `databricks-connect` in active environment. This requires authentication being set up via Databricks CLI.
-
-```bash
-uv pip uninstall pyspark
-uv pip install databricks-connect==17.2.*
-```
-
-**Option 2: Run with temporary dependency**
-```bash
-uv run --with databricks-connect==17.2.* pytest
-```
-
-> **Note:** For Databricks Runtime Serverless v4
-
+The `dev` dependency group includes `databricks-connect` for remote Spark execution. This requires authentication being set up via Databricks CLI.
 
 See https://docs.databricks.com/aws/en/dev-tools/vscode-ext/ for using Databricks Connect extension in VS Code.
 
 ### Unit-Tests
 
 ```bash
-# in case databricks-connect is installed, --no-sync prevents reinstalling pyspark
-uv run --no-sync pytest -v
+uv run pytest -v
 ```
 
-Based on whether Databricks Connect is enabled or not the Unit-Tests use a Databricks Cluster or start a local Spark session with Delta support.
+Based on whether Databricks Connect or local Spark is installed, the Unit-Tests use a Databricks Cluster or start a local Spark session with Delta support.
 * On Databricks the unit-tests currently assume the catalog `lake_dev` exists.
-
-> **Note:** For local Spark Java is required. On Windows Spark/Delta requires HADOOP libraries and generally does not run well, opt for `wsl` instead.
 
 ### Checks
 
