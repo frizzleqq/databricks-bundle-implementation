@@ -57,6 +57,10 @@ dab-project = "dab_project.cli:main"
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 
+[tool.uv]
+# disable 'dev' as default group as we have 'dev' and 'dev-spark' environments
+default-groups = []
+
 [tool.ruff]
 line-length = 100
 include = [
